@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client SOB</title>
+</head>
+<style>
+    table {
+        border: 8px outset;
+        border-radius: 10px;
+        border-spacing: 10px;
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <h2 style="text-align:center"> Client Branch </h2>
+    <table align="center" style="margin: 0px auto;">
+        <thead>
+            <tr>
+                <th>Client Code</th>
+                <th>Branch Name</th>
+                <th>Short Name</th>
+                <th>Status Code</th>
+                <th>TIN</th>
+                <th>Address</th>
+                <th>Location Code</th>
+                <th>Contact Number</th>
+                <th>Email Address</th>
+                <th>Remarks</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for branch in branchList %}
+            <tr>
+                <td>{{ branch.clientcode.clientname }}</td>
+                <td>{{ branch.branchname }}</td>
+                <td>{{ branch.branchshortname }}</td>
+                <td>{{ branch.statuscode.clientstatusname }}</td>
+                <td>{{ branch.tin }}</td>
+                <td>{{ branch.address }}</td>
+                <td>{{ branch.locationcode }}</td>
+                <td>{{ branch.contactnumber }}</td>
+                <td>{{ branch.emailaddress }}</td>
+                <td>{{ branch.remarks }}</td>
+                <td>
+                    <a href="/clientbranch/edit/{{ branch.pk }}">Update</a>
+                </td>
+                <td>
+                    <a href="/clientbranch/remove/{{ branch.pk }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <a href="{% url 'branchinsert' %}"><-- Go To Home Page</a>
+    </p>
+</body>
+
+</html>

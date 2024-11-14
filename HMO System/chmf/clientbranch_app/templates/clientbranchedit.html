@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Branch</title>
+    <style>
+        table {
+            border: 8px outset;
+            border-radius: 10px;
+            border-spacing: 10px;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th,
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align:center"> Update Branch </h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table style="width:50%" align="center">
+            <tr>
+                <td>Client Code
+                    <select name="clientcode" id="clientcode">
+                        {% for client in clients %}
+                            <option value="{{ client.clientcode }}" {% if branch.clientcode.clientcode == client.clientcode  %}selected{% endif %}>
+                                {{ client.clientname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Branch Name
+                    <input type="text" value="{{ branch.branchname }}" name="branchname" id="branchname" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Short Name
+                    <input type="text" value="{{ branch.branchshortname }}" name="branchshortname" id="branchshortname" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Status Code
+                    <select name="statuscode" id="statuscode">
+                        {% for clientstatus in clientStatusList %}
+                            <option value="{{ clientstatus.clientstatuscode }}" {% if branch.statuscode.statuscode == client.clientstatuscode  %}selected{% endif %}>
+                                {{ clientstatus.clientstatusname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>TIN
+                    <input type="text" value="{{  branch.tin }}" name="tin" id="tin" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" value="{{  branch.address }}" name="address" id="address" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="text" value="{{  branch.locationcode }}" name="locationcode" id="locationcode" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Number
+                    <input type="text" value="{{  branch.contactnumber }}" name="contactnumber" id="contactnumber" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Email Address
+                    <input type="email" value="{{  branch.emailaddress }}" name="emailaddress" id="emailaddress" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" value="{{  branch.remarks }}" name="remarks" id="remarks" required>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" class="btn btn-success" value="Save Changes">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

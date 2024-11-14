@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Medical Approval Procedure</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        <table align="center" border="2px solid" id="memberupdate">
+            <tr>
+                <th>Create Medical Approval Procedure</th>
+            </tr>
+            <tr>
+                <td>Procedure Code
+                    <select name="procedurecode" id="procedurecode" required>
+                        {% for medicalProcedure in medicalProcedures %}
+                            <option value="{{ medicalProcedure.procedurecode }}" 
+                                {% if medicalProcedure.procedurecode == approvalProcedure.procedurecode %} selected {% endif %}>
+                                {{ medicalProcedure.procedurename }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Doctor Code
+                    <select name="doctorcode" id="doctorcode" required>
+                        {% for Doctor in Doctors %}
+                            <option value="{{ Doctor.doctorcode }}" 
+                                {% if Doctor.doctorcode == approvalProcedure.doctorcode %} selected {% endif %}>
+                                {{ Doctor.firstname }} {{ Doctor.lastname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Professional Fee
+                    <input type="number" name="professionalfee" id="professionalfee">
+                </td>
+            </tr>
+            <tr>
+                <td>Confinement Amount
+                    <input type="number" name="confinementamount" id="confinementamount" >
+                </td>
+            </tr>
+            <tr>
+                <td>Other Amount Fee
+                    <input type="number" name="otheramount" id="otheramount" >
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <textarea name="remarks" id="remarks"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" class="btn btn-success" value="Update Approval Procedure">
+                </td>
+            </tr>
+        </table>
+        
+        
+    </form>
+   
+</div>
+</body>
+</html>

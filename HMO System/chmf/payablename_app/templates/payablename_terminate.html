@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Access Termination Details</th>
+            </tr>
+            <tr>
+                <td>Payable Name ID
+                    <input type="text" name="payablenameid" value="{{Historypayablename.payablenameid}}"disabled>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Providers Code
+                    <select name="providercode" id="providercode">
+                    {% for provider in Provider %}
+                        <option value="{{ provider.providercode }}" {% if Historypayablename.providercode.providercode == provider.providercode %}selected{% endif %}>{{ provider.providername }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+       
+            <tr>
+                <td>Payable Name
+                    <input type="text" name="payablename" value="{{Historypayablename.payablename}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Tin
+                    <input type="text" name="tin" value="{{Historypayablename.tin}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Days Type
+                    
+                        <input type="radio" name="daystype" value="Working_Days" {% if Historypayablename.daystype == 'Working_Days' %}checked{% endif %}> Working Days
+                        <input type="radio" name="daystype" value="Calendar_Days" {% if Historypayablename.daystype == 'Calendar_Days' %}checked{% endif %}> Calendar Days
+                  
+                </td>
+               
+            </tr>
+
+            <tr>
+                <td>Number of Days
+                    <input type="text" name="numberofdays" value="{{Historypayablename.numberofdays}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="Remarks" value="{{Historypayablename.Remarks}}">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Disapprove" class="btn btn-danger" name="Disapprove">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

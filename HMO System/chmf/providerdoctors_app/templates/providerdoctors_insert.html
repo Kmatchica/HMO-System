@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Provider Doctor Details</th>
+            </tr>
+            <tr>
+				<td>Provider Name
+					<select name="providercode" id="providercode"required>
+						{% for provider in Provider %}
+						<option value="{{provider.providercode}}">{{provider.providername}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            <tr>
+				<td>Doctor Name
+					<select name="doctorcode" id="doctorcode"required>
+						{% for doctor in Doctor %}
+						<option value="{{doctor.doctorcode}}">{{doctor.lastname}}, {{doctor.firstname}}, {{doctor.middlename}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            <tr>
+				<td>Room
+					<input type="text" id="room" name="room">
+                </td>
+			</tr>
+            <tr>
+				<td>Schedule Day
+					<input type="text" id="scheduleday" name="scheduleday">
+                </td>
+			</tr>
+            <tr>
+				<td>Schedule Time
+					<input type="text" id="scheduletime" name="scheduletime">
+                </td>
+			</tr>
+            <tr>
+				<td>Remarks
+					<input type="text" id="remarks" name="remarks">
+                </td>
+			</tr>
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function reloadDropdowns(dropdownid) {
+        $.ajax({
+            type: 'GET',
+            url: location.href,
+            success: function(data) {
+                var dropdownoptions = $(data).find('#'+dropdownid + ' option');
+    
+                var selectedoptions = $('#' +dropdownid).val();
+    
+                $('#' +dropdownid).empty();
+    
+                dropdownoptions.each(function() {
+                    var option = $(this).clone();
+                    if ($(this).val() == selectedoptions) {
+                        option.attr('selected', 'selected');
+                    }
+                    $('#' + dropdownid).append(option);
+                }); 
+            },
+            
+        });
+    }
+    
+setInterval(function() { reloadDropdowns('providercode'); reloadDropdowns('doctorcode'); }, 5000);  
+</script>
+
+</body>
+</html>

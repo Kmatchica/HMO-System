@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Sale Type Details</th>
+            </tr>
+                    
+            <tr>
+				<td>Sale Type Name
+					<input type="text" id="salestypename" name="salestypename" >
+                </td>
+			</tr>
+            <tr>
+				<td>Sale Type Short Name
+					<input type="text" id="salestypeshortname" name="salestypeshortname" >
+                </td>
+			</tr>
+            <tr>
+				<td>Commission Percent
+					<input type="text" id="commissionpercent" name="commissionpercent" >
+                </td>
+			</tr>
+
+            <tr>
+				<td>Remarks
+					<input type="text" id="remarks" name="remarks" >
+                </td>
+			</tr>
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+</body>
+</html>

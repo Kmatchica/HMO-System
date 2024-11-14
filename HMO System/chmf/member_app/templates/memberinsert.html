@@ -1,0 +1,184 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create member gender</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        <table align="center" border="2px solid" id="memberinsert">
+            <tr>
+                <th>Create Member</th>
+            </tr>
+            <tr>
+                <td>Policy Number
+                    <input type="text" name="policynumber" id="policynumber">
+                </td>
+            </tr>
+            <tr>
+                <td>Third Party ID
+                    <input type="text" name="thirdpartyid" id="thirdpartyid">
+                </td>
+            </tr>
+            <tr>
+                <td>Other ID
+                    <input type="text" name="otherid" id="otherid">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Code
+                    <input type="text" name="clientcode" id="clientcode">
+                </td>
+            </tr>
+            <tr>
+                <td>Branch Code
+                    <input type="number" name="branchcode" id="branchcode">
+                </td>
+            </tr>
+            <tr>
+                <td>Member Type Code
+                    <input type="number" name="membertypecode" id="membertypecode">
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name
+                    <input type="text" name="lastname" id="lastname">
+                </td>
+            </tr>
+            <tr>
+                <td>First Name
+                    <input type="text" name="firstname" id="firstname">
+                </td>
+            </tr>
+            <tr>
+                <td>Middle Name
+                    <input type="text" name="middlename" id="middlename">
+                </td>
+            </tr>
+            <tr>
+                <td>Birthdate
+                    <input type="date" name="birthdate" id="birthdate">
+                </td>
+            </tr>
+            <tr>
+                <td>Enroll Age
+                    <input type="number" step="0.01" name="enrollage" id="enrollage">
+                </td>
+            </tr>
+            <tr>
+                <td>Gender Code
+                    <select name="gendercode" id="gendercode" required>
+                        {% for membergender in memberGender %}
+                            <option value="{{ membergender.membergendercode}}">{{membergender.membergendername}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Civil Status Code
+                    <input type="number" name="civilstatuscode" id="civilstatuscode">
+                </td>
+            </tr>
+            <tr>
+                <td>Effective Date
+                    <input type="datetime-local" name="effectivedate" id="effectivedate">
+                </td>
+            </tr>
+            <tr>
+                <td>Expiry Date
+                    <input type="datetime-local" name="expirydate" id="expirydate">
+                </td>
+            </tr>
+            <tr>
+                <td>Renewal Date
+                    <input type="datetime-local" name="renewaldate" id="renewaldate">
+                </td>
+            </tr>
+            <tr>
+                <td>Reinstated Date
+                    <input type="datetime-local" name="reinstateddate" id="reinstateddate">
+                </td>
+            </tr>
+            <tr>
+                <td>Cancellation Date
+                    <input type="datetime-local" name="cancellationdate" id="cancellationdate">
+                </td>
+            </tr>
+            <tr>
+                <td>Status Code
+                    <select name="statuscode" id="statuscode" required>
+                        {% for memberstatus in memberStatus %}
+                            <option value="{{ memberstatus.memberstatuscode}}">{{memberstatus.memberstatusname}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>HIB
+                    <input type="number" step="0.01" name="hib" id="hib">
+                </td>
+            </tr>
+            <tr>
+                <td>COVID
+                    <input type="number" step="0.01" name="covid" id="covid">
+                </td>
+            </tr>
+            <tr>
+                <td>TIN
+                    <input type="text" name="tin" id="tin">
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" name="address" id="address">
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="number" name="locationcode" id="locationcode">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Number
+                    <input type="text" name="contactnumber" id="contactnumber">
+                </td>
+            </tr>
+            <tr>
+                <td>Email Address
+                    <input type="email" name="emailaddress" id="emailaddress">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <textarea name="remarks" id="remarks"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" class="btn btn-success" value="Create Member">
+                </td>
+            </tr>
+        </table>
+        
+    </form>
+   
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Update Access History and Details</th>
+            </tr>
+
+            <tr>
+                <td>Username (Current)
+                <input type="text" name="username" value="{{users.username }}"disabled></td>
+                <td>Username (Update)
+                    <input type="text" name="username" value="{{Historylogin.username }}"disabled></td>
+            </tr>
+            <tr>
+                <td>Email (Current)
+                <input type="text"  name="email" value="{{users.email }}" disabled></td>
+                <td>Email (Update)
+                    <input type="text"  name="email" value="{{Historylogin.email }}" disabled></td>
+            </tr>
+            <tr>
+                <td>First Name (Current)
+                <input type="text"  name="first_name" value="{{users.first_name }}"disabled></td>
+                <td>First Name (Update)
+                    <input type="text"  name="first_name" value="{{Historylogin.first_name }}"disabled></td>
+            </tr>
+            <tr>
+                <td>Middle Name (Current)
+                <input type="text"  name="middle_name" value="{{users.middle_name }}"disabled></td>
+                <td>Middle Name (Update)
+                    <input type="text"  name="middle_name" value="{{Historylogin.middle_name }}"disabled></td>
+            </tr>
+            <tr>
+                <td>Last Name (Current)
+                <input type="text"  name="last_name" value="{{users.last_name }}"disabled></td>
+                <td>Last Name (Update)
+                    <input type="text"  name="last_name" value="{{Historylogin.last_name }}"disabled></td>
+            </tr>
+            <tr>
+                <td>Contact Number (Current)
+                <input type="text" name="contact_number" value="{{users.contact_number }}"disabled></td>
+                <td>Contact Number (Update)
+                    <input type="text" name="contact_number" value="{{Historylogin.contact_number }}"disabled></td>
+            </tr>    
+        
+                <tr>
+                    <td>Department Name (Current)
+                        <select name="departmentcode" id="departmentcode"disabled>
+                        {% for department in Department %}
+                            <option value="{{ department.departmentcode}}"{% if users.departmentcode.departmentcode == department.departmentcode %}selected{% endif %}>{{department.departmentname}}</option>
+                            
+                        {% endfor %}
+                        </select>
+                    </td>
+                    <td>Department Name (Update)
+                        <select name="departmentcode" id="departmentcode"disabled>
+                        {% for department in Department %}
+                            <option value="{{ department.departmentcode}}"{% if Historylogin.departmentcode.departmentcode == department.departmentcode %}selected{% endif %}>{{department.departmentname}}</option>
+                            
+                        {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Role (Current)
+                        <select name="roleid" id="roleid"disabled>
+                            {% for roles in Roles %}
+                                <option value="{{ roles.roleid}}"{% if users.roleid.roleid == roles.roleid %}selected{% endif %}>{{roles.rolename}}</option>
+                            {% endfor %}
+                            </select>
+                    </td>
+                    <td>Role (Update)
+                        <select name="roleid" id="roleid"disabled>
+                            {% for roles in Roles %}
+                                <option value="{{ roles.roleid}}"{% if Historylogin.roleid.roleid == roles.roleid %}selected{% endif %}>{{roles.rolename}}</option>
+                            {% endfor %}
+                            </select>
+                    </td>
+                </tr>
+       
+            <tr>
+                <td>Remarks (Current)
+                <input type="text" name="remarks" value="{{users.remarks }}"disabled></td>
+            
+           
+                <td>Remarks (Update)
+                <input type="text" name="remarks" value="{{Historylogin.remarks }}"disabled></td>
+            </tr> 
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="delete">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

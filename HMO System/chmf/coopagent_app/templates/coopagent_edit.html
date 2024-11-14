@@ -1,0 +1,131 @@
+{% load static %}
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        <table  align="center"  border="2px solid">
+            <tr>
+                <th>Create CoopAgent</th>
+            </tr>
+			<tr>
+                <td>Coop Agent ID
+                    <input type="text" name="agentid" value="{{Coopagent.agentid}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>First Name
+                    <input type="text" name="firstname" value="{{Coopagent.firstname}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Middle Name
+                    <input type="text" name="middlename" value="{{Coopagent.middlename}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name
+                    <input type="text" name="lastname" value="{{Coopagent.lastname}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Suffix
+                    <input type="text" name="suffix" value="{{Coopagent.suffix}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Civil Status Code
+                    <input type="text" name="civilstatuscode" value="{{Coopagent.civilstatuscode}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Birth Day
+                    <input type="date" name="birthdate"  value="{{Coopagent.birthdate|date:'Y-m-d'}}">
+
+                </td>
+            </tr>
+            <tr>
+                <td>Email Address
+                    <input type="email" name="email" value="{{Coopagent.email}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Location Name
+                    <select name="departmentcode" id="departmentcode" class="reload-dropdown">
+                    {% for department in Departments %}
+                        <option value="{{ department.departmentcode }}" {% if Coopagent.departmentcode.departmentcode == department.departmentcode %}selected{% endif %} required>{{ department.departmentname }}</option>
+
+                            
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Role
+                    <select name="roleid" id="roleid" class="reload-dropdown">
+                        {% for roles in Roles %}
+                            <option value="{{ roles.roleid }}" {% if Coopagent.roleid.roleid == roles.roleid %}selected{% endif %}>{{ roles.rolename }}</option>
+                            {% endfor %}
+                        </select>
+                  
+                </td>
+            </tr>
+            <tr>
+                <td>Mobile Number
+                    <input type="tel" name="mobilenumber" value="{{Coopagent.mobilenumber}}" pattern="[0-9]{11}" maxlength="11" id="mobilenumber">
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" name="address" value="{{Coopagent.address}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="text" name="locationcode" value="{{Coopagent.locationcode}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" value="{{Coopagent.remarks}}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+<script src="{% static 'js/custom.js' %}"></script>
+<script>  
+const today = new Date();
+const isoString = today.toISOString().split('T')[0];
+const [year, month, day] = isoString.split('-');   
+
+document.getElementById('mobilenumber').addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});    
+    </script>    
+</body>
+</html>

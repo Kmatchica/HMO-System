@@ -1,0 +1,133 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        <table  align="center"  border="2px solid">
+            <tr>
+                <th colspan="2">Update Category History and Details</th>
+            </tr>
+			<tr>
+                <td>Coop Agent ID
+                    <input type="text" name="agentid" value="{{Historycoopagent.agentid}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>First Name
+                    <input type="text" name="firstname" value="{{Historycoopagent.firstname}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Middle Name
+                    <input type="text" name="middlename" value="{{Historycoopagent.middlename}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name
+                    <input type="text" name="lastname" value="{{Historycoopagent.lastname}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Suffix
+                    <input type="text" name="suffix" value="{{Historycoopagent.suffix}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Civil Status Code
+                    <input type="text" name="civilstatuscode" value="{{Historycoopagent.civilstatuscode}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Birth Day
+                    <input type="date" name="birthdate"  value="{{Historycoopagent.birthdate|date:'Y-m-d'}}"disabled>
+
+                </td>
+            </tr>
+            <tr>
+                <td>Email Address
+                    <input type="text" name="email" value="{{Historycoopagent.email}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Location Name
+                
+                    <select name="departmentcode" id="departmentcode">
+                    {% for department in departments %}
+                        <option value="{{ department.departmentcode }}" {% if Historycoopagent.departmentcode.departmentcode == department.departmentcode %}selected{% endif %}required>{{ department.departmentname }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Role
+                    <select name="roleid" id="roleid">
+                        {% for roles in roless %}
+                            <option value="{{ roles.roleid }}" {% if Historycoopagent.roleid.roleid == roles.roleid %}selected{% endif %}>{{ roles.rolename }}</option>
+                            {% endfor %}
+                        </select>
+                  
+                </td>
+            </tr>
+            <tr>
+                <td>Mobile Number
+                    <input type="text" name="mobilenumber" value="{{Historycoopagent.mobilenumber}}" onkeypress="isInputNumber(event)"disabled>
+                   
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" name="address" value="{{Historycoopagent.address}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="text" name="locationcode" value="{{Historycoopagent.locationcode}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" value="{{Historycoopagent.remarks}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="Approve">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="Disapprove">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        const today = new Date();
+const isoString = today.toISOString().split('T')[0];
+const [year, month, day] = isoString.split('-');
+document.getElementById('birthdate').value = `${month}-${day}-${year}`;
+        function isInputNumber(event) {
+            if (event.target.value.length >= 11) {
+                event.preventDefault();
+            } else if (!(/[0-9]/.test(event.key))) {
+                event.preventDefault();
+            }
+        }
+    </script>
+</body>
+</html>

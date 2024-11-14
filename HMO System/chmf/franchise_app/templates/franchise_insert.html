@@ -1,0 +1,181 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <title>Create CoopAgent</title>
+    <style>
+        #coopinsert td, #coopinsert th, #coopinsert table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+    
+</head>
+<body>
+    
+    <form method="post">
+
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+      
+        <table align="center"  border="2px solid" >
+         
+            <tr>
+                <td>Department Name
+                    <select name="departmentcode" id="departmentcode" class="reload-dropdown" required>
+                    {% for department in departments %}
+                        <option value="{{ department.departmentcode}}" required>{{department.departmentname}}</option>
+                    {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Client Name
+                    <input type="text" name="clientname" id="clientname">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Short Name
+                    <input type="text" name="clientshortname" id="clientshortname">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Classification Code
+                    <input type="number" name="clientclassificationcode" id="clientclassificationcode">
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" name="address" id="address">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Number
+                    <input type="text" name="contactnumber" id="contactnumber">
+                </td>
+            </tr>
+            <tr>
+                <td>Email
+                    <input type="email" name="email" id="email">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person
+                    <input type="text" name="contactperson" id="contactperson">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person Designation
+                    <input type="text" name="contactpersondesignation" id="contactpersondesignation">
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Name
+                    <input type="text" name="signatoryname" id="signatoryname">
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Designation
+                    <input type="text" name="signatorydesignation" id="signatorydesignation">
+                </td>
+            </tr>
+            <tr>
+                <td>Total Members
+                    <input type="number" name="totalmembers" id="totalmembers">
+                </td>
+            </tr>
+            <tr>
+                <td>Total Dependents
+                    <input type="number" name="totaldependents" id="totaldependents">
+                </td>
+            </tr>
+            <tr>
+                <td>Total Employees
+                    <input type="number" name="totalemployees" id="totalemployees">
+                </td>
+            </tr>
+            <tr>
+                <td>Existing HMO
+                    <input type="text" name="existinghmo" id="existinghmo">
+                </td>
+            </tr>
+            <tr>
+                <td>SOB Type ID
+                    <input type="number" name="sobtypeid" id="sobtypeid">
+                </td>
+            </tr>
+            <tr>
+                <td>Means of Knowing Name
+                    <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
+                        {% for MeansofFranchise in MeansOfFranchise %}
+                            <option value="{{ MeansofFranchise.meansofknowingid}}" required>{{MeansofFranchise.means}}</option>
+                        {% endfor %}
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Referred By
+                    <input type="text" name="referredby" id="referredby">
+                </td>
+            </tr>
+            <tr>
+                <td>Franchise Status Name
+                    <select name="franchisestatusid" id="franchisestatusid" class="reload-dropdown" required>
+                        {% for Franchisestatus in FranchiseStatus %}
+                            <option value="{{ Franchisestatus.franchisestatusid}}" required>{{Franchisestatus.franhcisestatusname}}</option>
+                        {% endfor %}
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Disapproval Reason
+                    <input type="text" name="disapprovalreason" id="disapprovalreason">
+                </td>
+            </tr>
+            <tr>
+                <td>ISTPA
+                    <input type="text" name="istpa" id="istpa">
+                </td>
+            </tr>
+            <tr>
+                <td>Admin Fee
+                    <input type="text" name="adminfee" id="adminfee">
+                </td>
+            </tr>
+            <tr>
+                <td>Network Access Fee
+                    <input type="text" name="networkaccessfee" id="networkaccessfee">
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="number" name="locationcode" id="locationcode">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" id="remarks">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script src="{% static 'js/custom.js' %}"></script>
+<script>
+ document.getElementById('mobilenumber').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '');
+}); 
+</script>
+
+</body>
+</html>

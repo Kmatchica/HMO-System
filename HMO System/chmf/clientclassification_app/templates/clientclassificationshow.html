@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Classification</title>
+</head>
+<style>
+    table {
+        border: 8px outset;
+        border-radius: 10px;
+        border-spacing: 10px;
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <h2 style="text-align:center"> Client Classification </h2>
+    <table align="center" style="margin: 0px auto;">
+        <thead>
+            <tr>
+                <th>Client Classification Name</th>
+                <th>Remarks</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for clientClassification in clientClassifications %}
+            <tr>
+                <td>{{clientClassification.clientclassificationname}}</td>
+                <td>{{clientClassification.clientclassificationremarks}}</td>
+                <td>
+                    <a href="/clientclassification/edit/{{clientClassification.pk}}">Update</a>
+                </td>
+                <td>
+                    <a href="/clientclassification/remove/{{clientClassification.pk}}">Delete</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <p>
+        <a href="{% url 'clientclassificationinsert' %}"><-- Go To Home Page</a>
+    </p>
+</body>
+
+</html>

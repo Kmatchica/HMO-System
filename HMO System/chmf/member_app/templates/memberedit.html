@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update member gender</title>
+    <style>
+        table {
+            border: 8px outset;
+            border-radius: 10px;
+            border-spacing: 10px;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th,
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align:center"> Update Member </h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table align="center" border="2px solid" id="memberedit">
+            <tr>
+                <th>Edit Member Details</th>
+            </tr>
+    
+            <tr>
+                <td>Policy Number
+                    <input type="text" name="policynumber" id="policynumber" value="{{ member.policynumber }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Third Party ID
+                    <input type="text" name="thirdpartyid" id="thirdpartyid" value="{{ member.thirdpartyid }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Other ID
+                    <input type="text" name="otherid" id="otherid" value="{{ member.otherid }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Code
+                    <input type="text" name="clientcode" id="clientcode" value="{{ member.clientcode }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Branch Code
+                    <input type="number" name="branchcode" id="branchcode" value="{{ member.branchcode }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Member Type Code
+                    <input type="number" name="membertypecode" id="membertypecode" value="{{ member.membertypecode }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name
+                    <input type="text" name="lastname" id="lastname" value="{{ member.lastname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>First Name
+                    <input type="text" name="firstname" id="firstname" value="{{ member.firstname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Middle Name
+                    <input type="text" name="middlename" id="middlename" value="{{ member.middlename }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Birthdate
+                    <input type="date" name="birthdate" id="birthdate" value="{{ member.birthdate | date:'Y-m-d' }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Enroll Age
+                    <input type="number" step="0.01" name="enrollage" id="enrollage" value="{{ member.enrollage }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Gender Code
+                    <select name="gendercode" id="gendercode">
+                        {% for membergender in memberGender %}
+                            <option value="{{ membergender.membergendercode }}" {% if member.gendercode.membergendercode == membergender.membergendercode  %}selected{% endif %}>{{ membergender.membergendername }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Civil Status Code
+                    <input type="number" name="civilstatuscode" id="civilstatuscode" value="{{ member.civilstatuscode }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Effective Date
+                    <input type="datetime-local" name="effectivedate" id="effectivedate" value="{{ member.effectivedate|date:'Y-m-d\TH:i' }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Expiry Date
+                    <input type="datetime-local" name="expirydate" id="expirydate" value="{{ member.expirydate|date:'Y-m-d\TH:i' }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Renewal Date
+                    <input type="datetime-local" name="renewaldate" id="renewaldate" value="{{ member.renewaldate|date:'Y-m-d\TH:i' }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Reinstated Date
+                    <input type="datetime-local" name="reinstateddate" id="reinstateddate" value="{{ member.reinstateddate|date:'Y-m-d\TH:i' }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Cancellation Date
+                    <input type="datetime-local" name="cancellationdate" id="cancellationdate" value="{{ member.cancellationdate|date:'Y-m-d\TH:i' }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Status Code
+                    <select name="statuscode" id="statuscode">
+                        {% for memberstatus in memberStatus %}
+                            <option value="{{ memberstatus.memberstatuscode }}" {% if member.memberstatus.memberstatuscode == memberstatus.memberstatuscode  %}selected{% endif %}>{{ memberstatus.memberstatusname }}</option>
+                            {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>HIB
+                    <input type="number" step="0.01" name="hib" id="hib" value="{{ member.hib }}">
+                </td>
+            </tr>
+            <tr>
+                <td>COVID
+                    <input type="number" step="0.01" name="covid" id="covid" value="{{ member.covid }}">
+                </td>
+            </tr>
+            <tr>
+                <td>TIN
+                    <input type="text" name="tin" id="tin" value="{{ member.tin }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" name="address" id="address" value="{{ member.address }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="number" name="locationcode" id="locationcode" value="{{ member.locationcode }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Number
+                    <input type="text" name="contactnumber" id="contactnumber" value="{{ member.contactnumber }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Email Address
+                    <input type="email" name="emailaddress" id="emailaddress" value="{{ member.emailaddress }}">
+                </td>   
+            <tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" value="{{ member.remarks }}" name="remarks" id="remarks">
+                </td>
+            </tr>
+                <td colspan="2" align="center"><input type="submit" class="btn btn-success"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

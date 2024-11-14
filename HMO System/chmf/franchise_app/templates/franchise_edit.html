@@ -1,0 +1,180 @@
+{% load static %}
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        <table  align="center"  border="2px solid">
+            <tr>
+                <th>Create CoopAgent</th>
+            </tr>
+			
+            
+            <tr>
+                <td>Client Name
+                    <input type="text" name="clientname" value="{{ Franchise.clientname }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Client Short Name
+                    <input type="text" name="clientshortname" value="{{ Franchise.clientshortname }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Client Classification Code
+                    <input type="number" name="clientclassificationcode" value="{{ Franchise.clientclassificationcode }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" name="address" value="{{ Franchise.address }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Number
+                    <input type="text" name="contactnumber" value="{{ Franchise.contactnumber }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Email
+                    <input type="email" name="email" value="{{ Franchise.email }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person
+                    <input type="text" name="contactperson" value="{{ Franchise.contactperson }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person Designation
+                    <input type="text" name="contactpersondesignation" value="{{ Franchise.contactpersondesignation }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Name
+                    <input type="text" name="signatoryname" value="{{ Franchise.signatoryname }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Designation
+                    <input type="text" name="signatorydesignation" value="{{ Franchise.signatorydesignation }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Total Members
+                    <input type="number" name="totalmembers" value="{{ Franchise.totalmembers }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Total Dependents
+                    <input type="number" name="totaldependents" value="{{ Franchise.totaldependents }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Total Employees
+                    <input type="number" name="totalemployees" value="{{ Franchise.totalemployees }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Existing HMO
+                    <input type="text" name="existinghmo" value="{{ Franchise.existinghmo }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>SOB Type ID
+                    <input type="number" name="sobtypeid" value="{{ Franchise.sobtypeid }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Means of Knowing ID
+                    <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
+                        {% for MeansofFranchise in MeansOfFranchise %}
+                            <option value="{{ MeansofFranchise.meansofknowingid}}"{% if Franchise.meansofknowingid == MeansofFranchise.meansofknowingid %}selected{% endif %} required>{{MeansofFranchise.means}}</option>
+                            {% endfor %}
+                        </select>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>Referred By
+                    <input type="text" name="referredby" value="{{ Franchise.referredby }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Franchise Status ID
+                    <select name="franchisestatusid" id="franchisestatusid" class="reload-dropdown" required>
+                        {% for Franchisestatus in FranchiseStatus %}
+                            <option value="{{ Franchisestatus.franchisestatusid}}" {% if Franchise.franchisestatusid == Franchisestatus.franchisestatusid %}selected{% endif %} required>{{Franchisestatus.franhcisestatusname}}</option>
+                        {% endfor %}
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Disapproval Reason
+                    <input type="text" name="disapprovalreason" value="{{ Franchise.disapprovalreason }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>ISTPA
+                    <input type="text" name="istpa" value="{{ Franchise.istpa }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Admin Fee
+                    <input type="text" name="adminfee" value="{{ Franchise.adminfee }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Network Access Fee
+                    <input type="text" name="networkaccessfee" value="{{ Franchise.networkaccessfee }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="number" name="locationcode" value="{{ Franchise.locationcode }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" value="{{ Franchise.remarks }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+<script src="{% static 'js/custom.js' %}"></script>
+<script>  
+const today = new Date();
+const isoString = today.toISOString().split('T')[0];
+const [year, month, day] = isoString.split('-');   
+
+document.getElementById('mobilenumber').addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});    
+    </script>    
+</body>
+</html>

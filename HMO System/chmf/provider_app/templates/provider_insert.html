@@ -1,0 +1,150 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+			{% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+			<tr>
+                <th>Create Provider Details</th>
+            </tr>
+
+			
+		
+			<tr>
+				<td>Provider Category Name
+					<select name="categorycode" id="categorycode"required>
+						{% for category in Category %}
+						<option value="{{category.categorycode}}">{{category.providercategoryname}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Provider Name
+					<input type="text" id="providername" name="providername"></td>
+			</tr>
+
+			<tr>
+				<td>Tin Number
+					<input type="text" id="tin" name="tin"></td>
+			</tr>
+
+			<tr>
+				<td>Address
+					<input type="text" id="address" name="address"></td>
+			</tr>
+			
+			<tr>
+				<td>Email Address
+					<input type="text" id="emailaddress" name="emailaddress"></td>
+			</tr>
+           
+			<tr>
+				<td>Conctact Person
+					<input type="text" id="contactperson" name="contactperson"></td>
+			</tr>
+			
+			<tr>
+				<td>Land Line Number
+					<input type="text" id="landline" name="landline"></td>
+			</tr>
+			
+			<tr>
+				<td>Mobile Number
+					<input type="text" id="mobilenumber" name="mobilenumber"></td>
+			</tr>
+			<tr>
+				<td>Provider Status Name
+					<select name="providerstatuscode" id="providerstatuscode"required>
+						{% for providerstatus in Providerstatus %}
+						<option value="{{providerstatus.providerstatuscode}}">{{providerstatus.statusname}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Accredit Date
+					<input type="date" id="accreditdate" name="accreditdate"></td>
+			</tr>
+			<tr>
+				<td>Suspension Date
+					<input type="date" id="suspensiondate" name="suspensiondate"></td>
+			</tr>
+			<tr>
+				<td>Disaccredit Date
+					<input type="date" id="disaccreditdate" name="disaccreditdate"></td>
+			</tr>
+			<tr>
+				<td>Reaccredit Date
+					<input type="date" id="reaccreditdate" name="reaccreditdate"></td>
+			</tr>
+			
+			<tr>
+				<td>Remarks
+					<input type="text" id="remarks" name="remarks"></td>
+			</tr>
+			
+			
+			
+			<tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+					<a class="btn btn-dark" href="{% url 'provider_show' %}" role="button">Back</a>
+                </td>
+            </tr>
+
+			
+	</table>
+    </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>  
+	document.getElementById('accreditdate').value = new Date().toISOString().split('T')[0];
+	document.getElementById('suspensiondate').value = new Date().toISOString().split('T')[0];
+	document.getElementById('disaccreditdate').value = new Date().toISOString().split('T')[0];
+	document.getElementById('reaccreditdate').value = new Date().toISOString().split('T')[0]; 
+	function reloadDropdowns(dropdownid) {
+    $.ajax({
+        type: 'GET',
+        url: location.href,
+        success: function(data) {
+            var dropdownoptions = $(data).find('#'+dropdownid + ' option');
+
+            var selectedoptions = $('#' +dropdownid).val();
+
+            $('#' +dropdownid).empty();
+
+            dropdownoptions.each(function() {
+                var option = $(this).clone();
+                if ($(this).val() == selectedoptions) {
+                    option.attr('selected', 'selected');
+                }
+                $('#' + dropdownid).append(option);
+            }); 
+        },
+       
+    });
+}
+
+setInterval(function() { reloadDropdowns('categorycode'); reloadDropdowns('providerstatuscode'); }, 5000); 
+</script>
+</body>
+</html>

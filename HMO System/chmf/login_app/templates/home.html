@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Dashboard - SB Admin</title>
+  <link href="css/styles.css" rel="stylesheet" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    
+  </style>
+</head>
+
+<body class="sb-nav-fixed">
+<div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
+  <button class="w3-bar-item w3-button w3-large"
+  onclick="w3_close()">&#9776;</button>
+  <form method="post">
+
+   
+   
+
+    {% csrf_token %}
+    <div class="container">
+      {% for module in moduless %}
+        {% for app, url_names in url_names.items %}
+          {% if module.moduleappname == app %}
+            {% for access in dataaccess %}
+              {% for permission in permissions %}
+                {% if permission.accesscode == access.accesscode and permission.modulecode == module.modulecode %}
+                  {% for url_name in url_names %}
+                    {% if "_show" in url_name %}
+                      {% if permission.holder == 1 and access.accessname == "List"  %}
+                        <ul><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{ module.modulename }}">{{ module.modulename }}</button></ul> 
+                        <div id="{{ module.modulename }}" class="collapse">
+                          <ul><a href="{% url url_name %}">{{ module.modulename }}</a></ul>
+                        </div>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </form>
+</div>
+
+
+<div id="main">
+
+  <div class="w3-teal">
+    <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
+    <div class="w3-container">
+      <h1 id="heading">HealthCareSystem</h1>
+    </div>
+  </div>
+
+  <script>
+  function w3_open() {
+    document.getElementById("main").style.marginLeft = "10%";
+    document.getElementById("mySidebar").style.width = "11%";
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("openNav").style.display = 'none';
+    
+  }
+  function w3_close() {
+    document.getElementById("main").style.marginLeft = "0%";
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("openNav").style.display = "inline-block";
+    
+  }
+
+  </script>
+
+</body>
+</html>

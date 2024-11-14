@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosis</title>
+</head>
+<style>
+    table {
+        border: 8px outset;
+        border-radius: 10px;
+        border-spacing: 10px;
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <h2 style="text-align:center"> Diagnosis </h2>
+    <table align="center" style="margin: 0px auto;">
+        <thead>
+            <tr>
+                <th>Diagnosis Name</th>
+                <th>Diagnosis Short Name</th>
+                <th>Remarks</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for diagnosis in diagnosisList %}
+            <tr>
+                <td>{{diagnosis.diagnosisname}}</td>
+                <td>{{diagnosis.diagnosisshortname}}</td>
+                <td>{{diagnosis.remarks}}</td>
+                <td>
+                    <a href="/medicaldiagnosis/diagnosisedit/{{diagnosis.pk}}">Update</a>
+                </td>
+                <td>
+                    <a href="/medicaldiagnosis/diagnosisremove/{{diagnosis.pk}}">Delete</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <a href="{% url 'diagnosisinsert' %}"><-- Go To Home Page</a>
+    </p>
+</body>
+
+</html>

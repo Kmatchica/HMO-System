@@ -1,0 +1,192 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+      
+        {% csrf_token %}
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        <table>
+            <tr>
+                <th>Create Doctor Details</th>
+            </tr>
+            
+            
+			<tr>
+				<td>Specialization
+					<select name="specializationcode" id="specializationcode" required>
+					{% for specialization in specializations %}
+						<option value="{{ specialization.specializationcode}}">{{specialization.specializationname}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            <tr>
+				<td>Sub Specialization
+					<select name="subspecializationcode" id="subspecializationcode"required>
+					{% for specialization in specializations %}
+						<option value="{{ specialization.specializationcode}}">{{specialization.specializationname}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            <tr>
+                <td>First Name
+                    <input type="text" name="firstname" id="firstname">
+                </td>
+            </tr>
+
+            <tr>
+                <td>Middle Name
+                    <input type="text" name="middlename" id="middlename">
+                </td>
+            </tr>
+
+            <tr>
+                <td>Last Name
+                    <input type="text" name="lastname" id="lastname">
+                </td>
+            </tr>
+            <tr>
+                <td>Mobile Number
+                    <input type="text" name="mobilenumber" id="mobilenumber">
+                </td>
+            </tr>
+            <tr>
+                <td>Landline Number
+                    <input type="text" name="landlinenumber" id="landlinenumber">
+                </td>
+            </tr>
+            <tr>
+                <td>Email Address
+                <input type="text" id="emailaddres" name="emailaddres"></td>
+            </tr> 
+            <tr>
+                <td>Address
+                <input type="text" id="address" name="address"></td>
+            </tr> 
+
+            <tr>
+				<td>Location
+					<select name="locationcode" id="locationcode"required>
+					{% for provider in providers %}
+						<option value="{{ provider.locationcode}}">{{provider.address}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            <tr>
+				<td>Doctor Status
+					<select name="doctorstatuscode" id="doctorstatuscode"required>
+					{% for doctorstatus in Doctorstatus %}
+						<option value="{{ doctorstatus.doctorstatuscode}}">{{doctorstatus.statusname}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            
+            <tr>
+                <td>Professional Fee
+                <input type="text" id="professionalfee" name="professionalfee"></td>
+            </tr> 
+            <tr>
+				<td>Accredit Date
+					<input type="date" id="accreditdate" name="accreditdate"></td>
+			</tr>
+		
+			<tr>
+				<td>Disaccredit Date
+					<input type="date" id="disaccreditdate" name="disaccreditdate"></td>
+			</tr>
+			<tr>
+				<td>Reaccredit Date
+					<input type="date" id="reaccreditdate" name="reaccreditdate"></td>
+			</tr>
+
+            <tr>
+                <td>Remarks
+                <input type="text" id="remarks" name="remarks"></td>
+            </tr> 
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>  
+    document.getElementById('accreditdate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('disaccreditdate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('reaccreditdate').value = new Date().toISOString().split('T')[0]; 
+// Get the Specialization and Sub Specialization dropdowns
+    const specializationSelect = document.getElementById('specializationcode');
+    const subspecializationSelect = document.getElementById('subspecializationcode');
+
+    // Function to filter Sub Specialization options
+    function filterSubSpecialization() {
+        const selectedSpecialization = specializationSelect.value;
+
+        // Loop through each option in the Sub Specialization dropdown
+        for (let i = 0; i < subspecializationSelect.options.length; i++) {
+            const option = subspecializationSelect.options[i];
+
+            // Show the option if it doesn't match the selected Specialization
+            if (option.value === selectedSpecialization) {
+                option.style.display = 'none'; // Hide matching option
+            } else {
+                option.style.display = ''; // Show non-matching options
+            }
+        }
+    }
+
+    // Add an event listener to the Specialization dropdown
+    specializationSelect.addEventListener('change', filterSubSpecialization);
+
+    // Initial filtering on page load
+    filterSubSpecialization();
+    function reloadDropdowns(dropdownid) {
+    $.ajax({
+        type: 'GET',
+        url: location.href,
+        success: function(data) {
+            var dropdownoptions = $(data).find('#'+dropdownid + ' option');
+
+            var selectedoptions = $('#' +dropdownid).val();
+
+            $('#' +dropdownid).empty();
+
+            dropdownoptions.each(function() {
+                var option = $(this).clone();
+                if ($(this).val() == selectedoptions) {
+                    option.attr('selected', 'selected');
+                }
+                $('#' + dropdownid).append(option);
+            }); 
+        },
+       
+    });
+}
+
+setInterval(function() { reloadDropdowns('specializationcode'); reloadDropdowns('locationcode'); reloadDropdowns('doctorstatuscode'); }, 5000);
+
+
+</script>    
+</body>
+</html>

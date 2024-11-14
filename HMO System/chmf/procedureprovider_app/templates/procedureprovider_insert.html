@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Provider Procedures Details</th>
+            </tr>
+            
+            <tr>
+                <td>Procedure Name
+                <select name="procedurecode" id="procedurecode"required>
+                    {% for medicalprocedures in Medicalprocedures %}
+                        <option value="{{ medicalprocedures.procedurecode }}">{{ medicalprocedures.procedurename }}</option>
+                        {% endfor %}
+                </select>
+                </td>
+             </tr>
+            
+             <tr>
+                <td>Provider Name
+                <select name="providercode" id="providercode"required>
+                    {% for provider in Provider %}
+                        <option value="{{ provider.providercode }}">{{ provider.providername }}</option>
+                        {% endfor %}
+                </select>
+                </td>
+             </tr>
+            
+             <tr>
+                <td>Amount
+                <input type="text" name="amount" id="amount"></td>
+            </tr>
+          
+            <tr>
+				<td>Remarks
+					<input type="text" id="remarks" name="remarks" >
+                </td>
+			</tr>
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+</body>
+</html>

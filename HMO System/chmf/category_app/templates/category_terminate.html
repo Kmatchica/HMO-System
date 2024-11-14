@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Category Termination Details</th>
+            </tr>
+            <tr>
+                <td>Coop Agent ID
+                    <input type="text" name="categorycode" value="{{Historycategory.categorycode}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Provider Category Name
+                    <input type="text" name="providercategoryname" value="{{Historycategory.providercategoryname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Provider Category Short Name
+                    <input type="text" name="providercategoryshortname" value="{{Historycategory.providercategoryshortname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" value="{{Historycategory.remarks }}">
+                </td>
+            </tr>
+            <tr>
+                <tr>
+                    <td>Order Number
+                    <input type="text" value="{{ Historycategory.ordernumber }}" name="ordernumber"></td>
+                </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Disapprove" class="btn btn-danger" name="Disapprove">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

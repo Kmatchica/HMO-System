@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Provider Procedures Details</th>
+            </tr>
+            
+            <tr>
+                <td>Doctor Name
+                <select name="doctorcode" id="doctorcode">
+                    {% for doctor in Doctor %}
+                        <option value="{{ doctor.doctorcode }}">{{ doctor.lastname}} {{ doctor.firstname}} {{ doctor.middlename}}</option>
+                        {% endfor %}
+                </select>
+                </td>
+             </tr>
+             <tr>
+                <td>Room Name
+                <select name="roomcode" id="roomcode">
+                    {% for roomtype in Roomtype %}
+                        <option value="{{ roomtype.roomcode }}">{{ roomtype.roomname }}</option>
+                        {% endfor %}
+                </select>
+                </td>
+             </tr>
+             <tr>
+                <td>Amount
+                <input type="text" name="amount" id="amount"></td>
+            </tr>
+            <tr>
+                <td>Remarks
+                <input type="text" name="remarks" id="remarks"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+</body>
+</html>

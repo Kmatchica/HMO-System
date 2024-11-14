@@ -1,0 +1,176 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        <table  align="center"  border="2px solid">
+            <tr>
+                <th colspan="2">Update Category History and Details</th>
+            </tr>
+            <tr>
+                <td>Client Name
+                    <input type="text" name="clientname" value="{{ Historyfranchise.clientname }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Client Short Name
+                    <input type="text" name="clientshortname" value="{{ Historyfranchise.clientshortname }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Client Classification Code
+                    <input type="number" name="clientclassificationcode" value="{{ Historyfranchise.clientclassificationcode }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                    <input type="text" name="address" value="{{ Historyfranchise.address }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Number
+                    <input type="text" name="contactnumber" value="{{ Historyfranchise.contactnumber }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Email
+                    <input type="email" name="email" value="{{ Historyfranchise.email }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person
+                    <input type="text" name="contactperson" value="{{ Historyfranchise.contactperson }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person Designation
+                    <input type="text" name="contactpersondesignation" value="{{ Historyfranchise.contactpersondesignation }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Name
+                    <input type="text" name="signatoryname" value="{{ Historyfranchise.signatoryname }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Designation
+                    <input type="text" name="signatorydesignation" value="{{ Historyfranchise.signatorydesignation }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Total Members
+                    <input type="number" name="totalmembers" value="{{ Historyfranchise.totalmembers }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Total Dependents
+                    <input type="number" name="totaldependents" value="{{ Historyfranchise.totaldependents }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Total Employees
+                    <input type="number" name="totalemployees" value="{{ Historyfranchise.totalemployees }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Existing HMO
+                    <input type="text" name="existinghmo" value="{{ Historyfranchise.existinghmo }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>SOB Type ID
+                    <input type="number" name="sobtypeid" value="{{ Historyfranchise.sobtypeid }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Means of Knowing ID
+                    <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
+                        {% for MeansofHistoryfranchise in MeansOfHistoryfranchise %}
+                            <option value="{{ MeansofHistoryfranchise.meansofknowingid}}"{% if Historyfranchise.meansofknowingid == MeansofHistoryfranchise.meansofknowingid %}selected{% endif %} required>{{MeansofHistoryfranchise.means}}</option>
+                            {% endfor %}
+                        </select>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>Referred By
+                    <input type="text" name="referredby" value="{{ Historyfranchise.referredby }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Historyfranchise Status ID
+                    <select name="Historyfranchisestatusid" id="Historyfranchisestatusid" class="reload-dropdown" required>
+                        {% for Historyfranchisestatus in HistoryfranchiseStatus %}
+                            <option value="{{ Historyfranchisestatus.Historyfranchisestatusid}}" {% if Historyfranchise.Historyfranchisestatusid == Historyfranchisestatus.Historyfranchisestatusid %}selected{% endif %} required>{{Historyfranchisestatus.franhcisestatusname}}</option>
+                        {% endfor %}
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Disapproval Reason
+                    <input type="text" name="disapprovalreason" value="{{ Historyfranchise.disapprovalreason }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>ISTPA
+                    <input type="text" name="istpa" value="{{ Historyfranchise.istpa }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Admin Fee
+                    <input type="text" name="adminfee" value="{{ Historyfranchise.adminfee }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Network Access Fee
+                    <input type="text" name="networkaccessfee" value="{{ Historyfranchise.networkaccessfee }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code
+                    <input type="number" name="locationcode" value="{{ Historyfranchise.locationcode }}" >
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" value="{{ Historyfranchise.remarks }}" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="Approve">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="Disapprove">
+                </td>
+            </tr>
+        </table>
+    </form>
+<script>
+        function isInputNumber(event) {
+            if (event.target.value.length >= 11) {
+                event.preventDefault();
+            } else if (!(/[0-9]/.test(event.key))) {
+                event.preventDefault();
+            }
+        }
+</script>
+</body>
+</html>

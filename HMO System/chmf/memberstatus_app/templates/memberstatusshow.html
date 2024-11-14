@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>member Status</title>
+</head>
+<style>
+    table {
+        border: 8px outset;
+        border-radius: 10px;
+        border-spacing: 10px;
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <h2 style="text-align:center"> member Status </h2>
+    <table align="center" style="margin: 0px auto;">
+        <thead>
+            <tr>
+                <th>member Status Name</th>
+                <th>member Status Short Name</th>
+                <th>Remarks</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for memberstatus in memberStatusList %}
+            <tr>
+                <td>{{memberstatus.memberstatusname}}</td>
+                <td>{{memberstatus.memberstatusshortname}}</td>
+                <td>{{memberstatus.memberstatusremarks}}</td>
+                <td>
+                    <a href="/memberstatus/memberstatusedit/{{memberstatus.pk}}">Update</a>
+                </td>
+                <td>
+                    <a href="/memberstatus/memberstatusremove/{{memberstatus.pk}}">Delete</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <a href="{% url 'memberstatusinsert' %}"><-- Go To Home Page</a>
+    </p>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Update Medical Procedures History and Details</th>
+            </tr>
+            
+           
+            <tr>
+                <td>Procedure Name (Current)
+                    <select name="procedurecode" id="procedurecode">
+                        {% for medicalprocedures in Medicalprocedures %}
+                            <option value="{{ medicalprocedures.procedurecode }}" {% if Procedureprovider.procedurecode.procedurecode == medicalprocedures.procedurecode  %}selected{% endif %}>{{ medicalprocedures.procedurename }}</option>
+                            {% endfor %}
+                    </select>
+                </td>
+                <td>Procedure Name (Update)
+                    <select name="procedurecode" id="procedurecode">
+                        {% for medicalprocedures in Medicalprocedures %}
+                            <option value="{{ medicalprocedures.procedurecode }}" {% if Historyprocedureprovider.procedurecode.procedurecode == medicalprocedures.procedurecode  %}selected{% endif %}>{{ medicalprocedures.procedurename }}</option>
+                            {% endfor %}
+                    </select>
+                </td>
+			</tr>
+
+            <tr>
+                <td>Provider Name (Current)
+                    <select name="providercode" id="providercode">
+                        {% for provider in Provider %}
+                            <option value="{{ provider.providercode }}" {% if Procedureprovider.providercode.providercode == provider.providercode  %}selected{% endif %}>{{ provider.providername }}</option>
+                            {% endfor %}
+                    </select>
+                </td>
+				<td>Provider Name (Update)
+                    <select name="providercode" id="providercode">
+                        {% for provider in Provider %}
+                            <option value="{{ provider.providercode }}" {% if Historyprocedureprovider.providercode.providercode == provider.providercode  %}selected{% endif %}>{{ provider.providername }}</option>
+                            {% endfor %}
+                    </select>
+                </td>
+			</tr> 
+            <tr>
+                <td>Amount (Current)
+                <input type="text" value="{{ Procedureprovider.amount }}" name="amount">
+                </td>
+                <td>Amount (Update)
+                    <input type="text" value="{{ Historyprocedureprovider.amount }}" name="amount">
+                    </td>
+            </tr>
+
+            <tr>
+                <td>Remarks (Current)
+					<input type="text"  name="remarks" value="{{Procedureprovider.remarks}}">
+                </td> 
+				<td>Remarks (Update)
+					<input type="text"  name="remarks" value="{{Historymedicalprocedures.remarks}}">
+                </td>
+			</tr>
+            
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="delete">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

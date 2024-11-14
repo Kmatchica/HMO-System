@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Category Details</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            <tr>
+                <th>Update Category Details</th>
+            </tr>
+			<tr>
+                <td>Coop Agent ID
+                    <input type="text" name="categorycode" value="{{Category.categorycode}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Provider Category Name
+                    <input type="text" name="providercategoryname" value="{{Category.providercategoryname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Provider Category Short Name
+                    <input type="text" name="providercategoryshortname" value="{{Category.providercategoryshortname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" value="{{Category.remarks }}">
+                </td>
+            </tr>
+            <tr>
+                <tr>
+                    <td>Order Number
+                    <input type="text" value="{{ Category.ordernumber }}" name="ordernumber"></td>
+                </tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

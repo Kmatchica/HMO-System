@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Provider Doctor Details</th>
+            </tr>
+           
+            <tr>
+				<td>Provider Name
+					<select name="providercode" id="providercode"required>
+						{% for provider in Provider %}
+						<option value="{{provider.providercode}}"{% if Historyproviderdoctors.providercode.providercode == provider.providercode %}selected{% endif %}>{{provider.providername}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            <tr>
+				<td>Doctor Name
+					<select name="doctorcode" id="doctorcode"required>
+						{% for doctor in Doctor %}
+						<option value="{{doctor.doctorcode}}"{% if Historyproviderdoctors.doctorcode.doctorcode == doctor.doctorcode %}selected{% endif %}>{{doctor.lastname}}, {{doctor.firstname}}, {{doctor.middlename}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+            <tr>
+				<td>Room
+					<input type="text" name="room" value="{{Historyproviderdoctors.room}}">
+                </td>
+			</tr>
+            <tr>
+				<td>Schedule Day
+					<input type="text"  name="scheduleday" value="{{Historyproviderdoctors.scheduleday}}">
+                </td>
+			</tr>
+            <tr>
+				<td>Schedule Time
+					<input type="text"  name="scheduletime" value="{{Historyproviderdoctors.scheduletime}}">
+                </td>
+			</tr>
+            <tr>
+				<td>Remarks
+					<input type="text"  name="remarks" value="{{Historyproviderdoctors.remarks}}">
+                </td>
+			</tr>
+           
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="delete">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Role</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            <tr>
+                <th>Create Role</th>
+            </tr>
+			<tr>
+                <td>Role ID
+                    <input type="text" name="roleid" id="roleid"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Role Name
+                    <input type="text" name="rolename" id="rolename">
+                </td>
+            </tr>
+			<tr>
+                <td>Display Name
+                    <input type="text" name="roledisplayname" id="roledisplayname">
+                </td>
+            </tr>
+
+            <tr>
+                <td>Role Description
+                    <input type="text" name="roledescription" id="roledescription">
+                </td>
+            </tr>
+         
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

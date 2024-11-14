@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Client status</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        
+        <table  align="center"  border="2px solid "id="clientinsert">
+            <tr>
+                <th>Create Client Status</th>
+            </tr>
+			
+            <tr>
+                <td>Client Status
+                    <input type="text" name="clientstatusname" id="clientstatusname">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Status Short Name
+                    <input type="text" name="clientstatusshortname" id="clientstatusshortname">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" id="remarks">
+                </td>
+            </tr>
+         
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+   
+</div>
+</body>
+</html>

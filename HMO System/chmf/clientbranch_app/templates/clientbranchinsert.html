@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Client Branch</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        
+        <table>
+            <tr>
+                <th>Create Client Branch</th>
+            </tr>
+            <tr>
+                <td>Client Code
+                    <select name="clientcode" id="clientcode" required>
+                        {% for client in clients %}
+                            <option value="{{ client.clientcode }}">
+                                {{ client.clientname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Name
+                    <input type="text" name="branchname" id="branchname">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Short Name
+                    <input type="text" name="branchshortname" id="branchshortname">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Status Code
+                    <select name="statuscode" id="statuscode" required>
+                        {% for clientStatus in clientStatusList %}
+                            <option value="{{ clientStatus.clientstatuscode }}">
+                                {{ clientStatus.clientstatusname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch TIN
+                    <input type="text" name="tin" id="tin">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Address
+                    <input type="text" name="address" id="address">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Location Code
+                    <input type="text" name="locationcode" id="locationcode">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Contact Number
+                    <input type="text" name="contactnumber" id="contactnumber">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Email Address
+                    <input type="email" name="emailaddress" id="emailaddress">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Branch Remarks
+                    <input type="text" name="remarks" id="remarks">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" class="btn btn-success" value="Create">
+                </td>
+            </tr>
+        </table>
+        
+    </form>
+   
+</div>
+</body>
+</html>

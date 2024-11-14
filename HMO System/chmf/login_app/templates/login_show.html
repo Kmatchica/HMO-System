@@ -1,0 +1,328 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard - SB Admin</title>
+
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        th, td {
+            margin: 5px;
+            padding: 8px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <body class="sb-nav-fixed">
+        <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
+          <button class="w3-bar-item w3-button w3-large"
+          onclick="w3_close()">&#9776;</button>
+         
+          
+          <form method="post">
+            {% csrf_token %}
+            <div class="container">
+              {% for module in moduless %}
+                {% for app, url_names in url_names.items %}
+                  {% if module.moduleappname == app %}
+                    {% for access in dataaccess %}
+                      {% for permission in Permissions %}
+                        {% if permission.accesscode == access.accesscode and permission.modulecode == module.modulecode %}
+                          {% for url_name in url_names %}
+                            {% if "_show" in url_name %}
+                              {% if permission.holder == 1 and access.accessname == "List"  %}
+                                <ul><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{ module.modulename }}">{{ module.modulename }}</button></ul>
+                                <div id="{{ module.modulename }}" class="collapse">
+                                  <ul><a href="{% url url_name %}">{{ module.modulename }}</a></ul>
+                                </div>
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endfor %}
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+            </div>
+          </form>
+        </div>
+<div id="main">
+            <div class="w3-teal">
+              <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
+              <div class="w3-container">
+                <h1 id="heading">HealthCareSystem</h1>
+              </div>
+            </div>
+<div class="w3-container">
+
+    <div class="w3-bar w3-black">
+        <button class="w3-bar-item w3-button tablink w3-red" onclick="openTab(event,'Access')">Access</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'Approval')">Approval</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'Update')">Update</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'Terminate')">Terminate</button>
+    </div>
+</div>
+        <div id="Access" class="w3-container w3-border tab">
+            <!-- Search Bar -->
+            <input type="text" id="search_query" name="search_query" value="{{ search_query }}" placeholder="Search...">
+
+            <!-- Access Table -->
+            <table align="center" border="2px solid" id="loginshow">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Status </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    {% for User in users %}
+                    <tr>
+                        <td>{{ User.first_name }} 
+                            {{ User.last_name }}</td>
+                            <td>{{User.status}}</td>
+                            <td>
+                                {% if User.status == "Deactive" or User.status == "Suspend" or User.status == "Reactive" %}
+                                <!-- Actions Disabled -->
+                                {% else %}
+                                {% if show_edit_button %}
+                                <a href="/login/edit/{{User.pk}}">Edit
+                                    {% endif %}        
+                                </a><br>
+                                {% if show_delete_button %}
+                                <a href="/login/remove/{{User.pk}}" >Remove</a>
+                                {% endif %}                        
+                                {% endif %}
+                                
+                            </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Approval  -->
+        <div id="Approval" class="w3-container w3-border tab" style="display:none">
+            <!-- Search Bar -->
+            <input type="text" id="search_approval" name="search_approval" value="{{ search_approval }}" placeholder="Search...">
+
+            <table align="center" border="2px solid" id="loginapproval">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Status </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-approval">
+                    {% for historylogin in historyapproval %}
+                    <tr>
+                        
+                        <td>{{ historylogin.first_name }} 
+                            {{ historylogin.last_name }}</td>
+                            <td>{{historylogin.status}}</td>
+                            <td>
+                                {% if historylogin.transactype == "Forapproval" %}
+                                <a href="/login/approval/{{ historylogin.pk }}">View</a><br>
+                            {% endif %}                      
+                            </td>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Update -->
+        <div id="Update" class="w3-container w3-border tab" style="display:none">
+            <!-- Search Bar -->
+            <input type="text" id="search_update" name="search_update" value="{{ search_update }}" placeholder="Search...">
+
+            <table align="center" border="2px solid" id="loginupdate">
+                <thead>
+                    <tr>
+                        
+                        <th>Full Name</th>
+                        <th>Status </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-update">
+                    {% for historylogin in historyupdate %}
+                    <tr>  
+                        
+                        <td>{{ historylogin.first_name }} 
+                        {{ historylogin.last_name }}</td>
+                        <td>{{historylogin.status}}</td>
+                        <td>
+                            {% if historylogin.transactype == "Forupdate" %}
+                                <a href="/login/edited/{{ historylogin.pk }}">View</a><br>
+                            {% endif %}                       
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Terminate -->
+        <div id="Terminate" class="w3-container w3-border tab" style="display:none">
+            <!-- Search Bar -->
+            <input type="text" id="search_terminate" name="search_terminate" value="{{ search_terminate }}" placeholder="Search...">
+
+            <table align="center" border="2px solid" id="loginterminate">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Status </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-terminate">
+                    {% for historydoctor in historyterminate %}
+                    <tr>
+                        <td>{{historylogin.recordno}}</td>
+                        <td>{{ historylogin.first_name }} 
+                        {{ historylogin.last_name }}</td>
+                        <td>{{historylogin.status}}</td>
+                        <td>
+                            {% if historylogin.transactype == "Forterminate" %}
+                                <a href="/login/terminate/{{ historylogin.pk }}">View</a><br>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Create Access Button -->
+        {% if show_insert_button %}
+            <a href="{% url 'login_insert' %}">Create Details</a>
+        {% endif %}
+</body>
+<script>
+    // Move all JavaScript code here
+    $(document).ready(function() {
+        // Search functionality
+        $("#search_query").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-body tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        $("#search_approval").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-body-approval tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        $("#search_update").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-body-update tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        $("#search_terminate").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table-body-terminate tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+
+
+
+/////////////////////////////////////// auto reload and search ///////////////////////////////////////
+
+    $(document).ready(function() {
+function reloadLoginShow() {
+    $('#loginshow').load(location.href + ' #loginshow');
+}
+
+function reloadLoginApproval() {
+    $('#loginapproval').load(location.href + ' #loginapproval');
+}
+
+function reloadLoginUpdate() {
+    $('#loginupdate').load(location.href + ' #loginupdate');
+}
+
+function reloadLoginTerminate() {
+    $('#loginterminate').load(location.href + ' #loginterminate');
+}
+
+function checkTextBoxes() {
+    var searchQueryValue = $('#search_query').val();
+    var searchApprovalValue = $('#search_approval').val();
+    var searchUpdateValue = $('#search_update').val();
+    var searchTerminateValue = $('#search_terminate').val();
+    
+    if (searchQueryValue === '') {
+        reloadLoginShow();
+    }
+    
+    if (searchApprovalValue === '') {
+        reloadLoginApproval();
+    }
+    
+    if (searchUpdateValue === '') {
+        reloadLoginUpdate();
+    }
+
+    if (searchTerminateValue === '') {
+        reloadLoginTerminate();
+    }
+}
+
+setInterval(checkTextBoxes, 5000);
+checkTextBoxes();
+});
+/////////////////////////////////////////////////////////////////////////////////////  
+    function openTab(evt, payablename) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("tab");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+        }
+        document.getElementById(payablename).style.display = "block";
+        evt.currentTarget.className += " w3-red";
+    }
+
+
+function w3_open() {
+document.getElementById("main").style.marginLeft = "25%";
+document.getElementById("mySidebar").style.width = "25%";
+document.getElementById("mySidebar").style.display = "block";
+document.getElementById("openNav").style.display = 'none';
+
+}
+function w3_close() {
+document.getElementById("main").style.marginLeft = "0%";
+document.getElementById("mySidebar").style.display = "none";
+document.getElementById("openNav").style.display = "inline-block";
+
+}        
+</script>
+</html>
+
+
+
+

@@ -1,0 +1,208 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Update Access History and Details</th>
+            </tr>
+            <tr>
+                <td>Record Number (Current)
+                    <input type="text" name="recordno" value="{{Provider.recordno}}" disabled>
+                </td>
+                <td>Record Number (Update)
+                    <input type="text" name="recordno" value="{{Historyprovider.recordno}}" disabled>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Provider Category Name (Current)
+                    <select name="categorycode" id="categorycode">
+                    {% for category in Category %}
+                        <option value="{{ category.categorycode }}" {% if Provider.categorycode.categorycode == category.categorycode %}selected{% endif %}>{{ category.providercategoryname }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>Provider Category Name (Update)
+                    <select name="categorycode" id="categorycode">
+                    {% for category in Category %}
+                        <option value="{{ category.categorycode }}" {% if Historyprovider.categorycode.categorycode == category.categorycode %}selected{% endif %}>{{ category.providercategoryname }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Provider Name (Current)
+                <input type="text" value="{{ Provider.providername }}" name="providername">
+                </td>
+                <td>Provider Name (Update)
+                    <input type="text" value="{{ Historyprovider.providername }}" name="providername">
+                    </td>
+            </tr>
+            <tr>
+                <td>Tin (Current)
+                <input type="text" value="{{ Provider.tin }}" name="tin">
+                </td>
+                <td>Tin (Update)
+                    <input type="text" value="{{ Historyprovider.tin }}" name="tin">
+                    </td>
+            </tr>
+            <tr>
+                <td>Address (Current)
+                <input type="text" value="{{ Provider.address }}" name="address">
+                </td>
+                <td>Address (Update)
+                    <input type="text" value="{{ Historyprovider.address }}" name="address">
+                    </td>
+            </tr>
+            
+            <tr>
+                <td>Email Address (Current)
+                <input type="text" value="{{ Provider.emailaddress }}" name="emailaddress">
+                </td>
+                <td>Email Address (Update)
+                    <input type="text" value="{{ Historyprovider.emailaddress }}" name="emailaddress">
+                </td>
+            </tr>
+
+            <tr>
+                <td>Conctact Person (Current)
+                <input type="text" value="{{ Provider.contactperson }}" name="contactperson">
+                </td>
+                <td>Conctact Person (Update)
+                    <input type="text" value="{{ Historyprovider.contactperson }}" name="contactperson">
+                </td>
+            </tr>
+
+            <tr> 
+                <td>landline (Current)
+                <input type="text" value="{{ Provider.landline }}" name="landline">
+                </td> 
+                <td>landline (Update)
+                    <input type="text" value="{{ Historyprovider.landline }}" name="landline">
+                </td>
+            </tr>
+            <tr>
+                <td>Mobile Number (Current)
+                <input type="text" value="{{ Provider.mobilenumber }}" name="mobilenumber">
+                </td>
+                <td>Mobile Number (Update)
+                    <input type="text" value="{{ Historyprovider.mobilenumber }}" name="mobilenumber">
+                </td>
+            </tr>
+
+            <tr>
+				<td>Provider Status Name (Current)
+					<select name="providerstatuscode" id="providerstatuscode"required>
+						{% for providerstatus in Providerstatus %}
+						
+                        <option value="{{providerstatus.providerstatuscode}}"{% if Provider.providerstatuscode.providerstatuscode == providerstatus.providerstatuscode %}selected{% endif %}>{{providerstatus.statusname}}</option>
+					{% endfor %}
+					</select>
+				</td>
+                <td>Provider Status Name (Update)
+					<select name="providerstatuscode" id="providerstatuscode"required>
+						{% for providerstatus in Providerstatus %}
+						
+                        <option value="{{providerstatus.providerstatuscode}}"{% if Historyprovider.providerstatuscode.providerstatuscode == providerstatus.providerstatuscode %}selected{% endif %}>{{providerstatus.statusname}}</option>
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+        
+			<tr>
+				<td>Accredit Date (Current)
+					<input type="text" name="accreditdate" value="{{ Provider.mobilenumber }}">
+                </td>
+
+                <td>Accredit Date (Update)
+                    <input type="text" name="accreditdate" value="{{ Historyprovider.mobilenumber }}">
+                </td>
+			</tr>
+
+            <tr>
+				<td>Disaccredit Date (Current)
+					<input type="date" name="disaccreditdate" value="{{ Provider.disaccreditdate|date:'Y-m-d' }}">
+                </td>
+                <td>Disaccredit Date (Update)
+					<input type="date" name="disaccreditdate" value="{{ Historyprovider.disaccreditdate|date:'Y-m-d' }}">
+                </td> 
+			</tr>
+
+			<tr>
+				<td>Suspension Date (Current)
+					<input type="date"  name="suspensiondate" value="{{ Provider.suspensiondate|date:'Y-m-d' }}">
+                </td>
+                <td>Suspension Date (Update)
+					<input type="date"  name="suspensiondate" value="{{ Historyprovider.suspensiondate|date:'Y-m-d' }}">
+                </td>
+			</tr>
+
+			<tr>
+				<td>Disaccredit Date (Current)
+					<input type="date" name="disaccreditdate" value="{{ Provider.disaccreditdate|date:'Y-m-d' }}">
+                </td>
+                <td>Disaccredit Date (Update)
+					<input type="date" name="disaccreditdate" value="{{ Historyprovider.disaccreditdate|date:'Y-m-d' }}">
+                </td>
+			</tr>
+
+			<tr>
+				<td>Reaccredit Date (Current)
+					<input type="date"  name="reaccreditdate" value="{{ Provider.reaccreditdate|date:'Y-m-d' }}">
+                </td>
+                <td>Reaccredit Date (Update)
+					<input type="date"  name="reaccreditdate" value="{{ Historyprovider.reaccreditdate|date:'Y-m-d' }}">
+                </td>
+			</tr>
+
+
+			
+            <tr>
+                <td>Remarks (Current)
+                <input type="text" value="{{ Provider.remarks }}" name="remarks">
+                </td>
+                <td>Remarks (Update)
+                    <input type="text" value="{{ Historyprovider.remarks }}" name="remarks">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="delete">
+                </td>
+            </tr>
+        </table>
+    </form>
+<script>
+    const today = new Date();
+    const isoString = today.toISOString().split('T')[0];
+    const [year, month, day] = isoString.split('-');
+    document.getElementById('accreditdate').value = `${month}-${day}-${year}`;
+    document.getElementById('suspensiondate').value = `${month}-${day}-${year}`;
+    document.getElementById('disaccreditdate').value = `${month}-${day}-${year}`;
+    document.getElementById('reaccreditdate').value = `${month}-${day}-${year}`;
+    
+</script>    
+</body>
+</html>

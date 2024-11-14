@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Details</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        th, td {
+            margin: 5px;
+            padding: 8px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="w3-container">
+        <h2>Access Details</h2>
+
+        <div class="w3-bar w3-black">
+            <button class="w3-bar-item w3-button tablink w3-red" onclick="openTab(event,'Access')">Access</button>
+            <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'Approval')">Approval</button>
+            <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'Update')">Update</button>
+            <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'Terminate')">Terminate</button>
+        </div>
+
+        <div id="Access" class="w3-container w3-border tab">
+            <!-- Search Bar -->
+            <input type="text" id="search_query" name="search_query" value="{{ search_query }}" placeholder="Search...">
+
+            <!-- Access Table -->
+            <table align="center" border="2px solid" id="accessshow">
+                <thead>
+                    <tr>
+                       
+                        <th>Access Name</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    {% for access in dataaccess %}
+                    <tr>
+                        
+                        <td>{{ access.accessname }}</td>
+                        <td>{{ access.remarks }}</td>
+                        <td>{{ access.status }}</td>
+                        <td>
+                            {% if access.status == "Deactive" or access.status == "Suspend" or access.status == "Reactive" %}
+                            <!-- Actions Disabled -->
+                            {% else %}
+                                {% if show_edit_button %}
+                                    <a href="/access/edit/{{ access.pk }}">Update</a><br>
+                                {% endif %}
+                                {% if show_delete_button %}
+                                    <a href="/access/remove/{{ access.pk }}">Terminate</a><br>
+                                {% endif %}
+                            
+                            {% endif %}
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+       <!-- Approval  -->
+        <div id="Approval" class="w3-container w3-border tab" style="display:none">
+            <!-- Search Bar -->
+            <input type="text" id="search_approval" name="search_approval" value="{{ search_approval }}" placeholder="Search...">
+
+            <table align="center" border="2px solid" id="accessapproval">
+                <thead>
+                    <tr>
+                        
+                        <th>Access Name</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-approval">
+                    {% for historyaccess in historyapproval %}
+                    <tr>
+                        
+                        <td>{{ historyaccess.accessname }}</td>
+                        <td>{{ historyaccess.remarks }}</td>
+                        <td>{{ historyaccess.status }}</td>
+                        <td>
+                            
+                            {% if historyaccess.transactype == "Forapproval" %}
+                                <a href="/access/approval/{{ historyaccess.pk }}">View</a><br>
+                            {% endif %}
+                        
+                        
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+     <!-- Update -->
+        <div id="Update" class="w3-container w3-border tab" style="display:none">
+            <!-- Search Bar -->
+            <input type="text" id="search_update" name="search_update" value="{{ search_update }}" placeholder="Search...">
+
+            <table align="center" border="2px solid" id="accessupdate">
+                <thead>
+                    <tr>
+                        
+                        <th>Access Name</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-update">
+                    {% for historyaccess in historyupdate %}
+                    <tr>
+                        
+                        <td>{{ historyaccess.accessname }}</td>
+                        <td>{{ historyaccess.remarks }}</td>
+                        <td>{{ historyaccess.status }}</td>
+                        <td>
+                            {% if historyaccess.transactype == "Forupdate" %}
+                                <a href="/access/edited/{{ historyaccess.pk }}">View</a><br>
+                            {% endif %}
+                            {% if historyaccess.transactype == "Forapproval" %}
+                                <a href="/access/approval/{{ historyaccess.pk }}">View</a><br>
+                            {% endif %}
+                            {% if historyaccess.transactype == "Forterminate" %}
+                                <a href="/access/terminate/{{ historyaccess.pk }}">View</a><br>
+                            {% endif %}
+                        
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    <!-- Terminate -->
+        <div id="Terminate" class="w3-container w3-border tab" style="display:none">
+            <!-- Search Bar -->
+            <input type="text" id="search_terminate" name="search_terminate" value="{{ search_terminate }}" placeholder="Search...">
+
+            <table align="center" border="2px solid" id="accessterminate">
+                <thead>
+                    <tr>
+                        
+                        <th>Access Name</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-terminate">
+                    {% for historyaccess in historyterminate %}
+                    <tr>
+                        
+                        <td>{{ historyaccess.accessname }}</td>
+                        <td>{{ historyaccess.remarks }}</td>
+                        <td>{{ historyaccess.status }}</td>
+                        <td>
+                            {% if historyaccess.transactype == "Forupdate" %}
+                                <a href="/access/edited/{{ historyaccess.pk }}">View</a><br>
+                            {% endif %}
+                            {% if historyaccess.transactype == "Forapproval" %}
+                                <a href="/access/approval/{{ historyaccess.pk }}">View</a><br>
+                            {% endif %}
+                            {% if historyaccess.transactype == "Forterminate" %}
+                                <a href="/access/terminate/{{ historyaccess.pk }}">View</a><br>
+                            {% endif %}
+                        
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+       
+        
+
+        <!-- Create Access Button -->
+        {% if show_insert_button %}
+            <a href="{% url 'access_insert' %}">Create Access</a>
+        {% endif %}
+
+<script src="{% static 'js/access.js' %}"></script>
+</body>
+</html>
+
+
+
+

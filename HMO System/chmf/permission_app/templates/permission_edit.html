@@ -1,0 +1,58 @@
+
+<head>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<form method="post">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <th>Access Name</th>
+      {% for access in dataaccess %}
+        <th>{{ access.accessname }}</th>
+      {% endfor %}
+    </tr>
+    
+    {% for moduleslist in moduless %}
+      <tr>
+        <td>{{ moduleslist.modulename }}</td>
+        {% for access in dataaccess %}
+          <td>
+            {% for permission in permissions %}
+              {% if permission.accesscode == access.accesscode and permission.modulecode == moduleslist.modulecode %}
+               
+                  <input 
+                    id="permission_checkbox_{{ permission.recordno }}" 
+                    type="checkbox" 
+                    name="permission_checkbox_{{ permission.recordno }}" 
+                    value="{{ permission.holder }}" 
+                    {% if permission.holder == 1 %} checked {% endif %}>
+                  <input 
+                    id="permission_checkbox_hidden_{{ permission.recordno }}" 
+                    type="hidden" 
+                    name="permission_checkbox_hidden_{{ permission.recordno }}" 
+                    value="{{ permission.holder }}">
+                </label>
+              {% endif %}
+            {% endfor %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+  <input type="submit" value="Save">
+</form>
+
+<script>
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', (event) => {
+      const hiddenInput = document.getElementById(`permission_checkbox_hidden_${checkbox.name.split('_')[2]}`);
+      hiddenInput.value = event.target.checked ? 1 : 0;
+      console.log(`CHECKBOX VALUE: ${hiddenInput.value}`);
+    });
+  });
+</script>

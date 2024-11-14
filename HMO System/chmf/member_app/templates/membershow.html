@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member</title>
+</head>
+<style>
+    table {
+        border: 8px outset;
+        border-radius: 10px;
+        border-spacing: 10px;
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <h2 style="text-align:center"> Member </h2>
+    <table align="center" border="2px solid" id="membershow">
+        <thead>
+            <tr>
+                <th>Policy Number</th>
+                <th>Third Party ID</th>
+                <th>Other ID</th>
+                <th>Client Code</th>
+                <th>Branch Code</th>
+                <th>Member Type Code</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Birthdate</th>
+                <th>Enroll Age</th>
+                <th>Gender Code</th>
+                <th>Civil Status Code</th>
+                <th>Effective Date</th>
+                <th>Expiry Date</th>
+                <th>Renewal Date</th>
+                <th>Reinstated Date</th>
+                <th>Cancellation Date</th>
+                <th>Status Code</th>
+                <th>HIB</th>
+                <th>COVID</th>
+                <th>TIN</th>
+                <th>Address</th>
+                <th>Location Code</th>
+                <th>Contact Number</th>
+                <th>Email Address</th>
+                <th>Remarks</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            {% for member in memberList %}
+            <tr>
+                <td>{{ member.policynumber }}</td>
+                <td>{{ member.thirdpartyid }}</td>
+                <td>{{ member.otherid }}</td>
+                <td>{{ member.clientcode }}</td>
+                <td>{{ member.branchcode }}</td>
+                <td>{{ member.membertypecode }}</td>
+                <td>{{ member.lastname }}</td>
+                <td>{{ member.firstname }}</td>
+                <td>{{ member.middlename }}</td>
+                <td>{{ member.birthdate }}</td>
+                <td>{{ member.enrollage }}</td>
+                <td>{{ member.gendercode.membergendername }}</td>
+                <td>{{ member.civilstatuscode }}</td>
+                <td>{{ member.effectivedate }}</td>
+                <td>{{ member.expirydate }}</td>
+                <td>{{ member.renewaldate }}</td>
+                <td>{{ member.reinstateddate }}</td>
+                <td>{{ member.cancellationdate }}</td>
+                <td>{{ member.statuscode.memberstatusname }}</td>
+                <td>{{ member.hib }}</td>
+                <td>{{ member.covid }}</td>
+                <td>{{ member.tin }}</td>
+                <td>{{ member.address }}</td>
+                <td>{{ member.locationcode }}</td>
+                <td>{{ member.contactnumber }}</td>
+                <td>{{ member.emailaddress }}</td>
+                <td>{{ member.remarks }}</td>
+                <td>
+                    <a href="/member/edit/{{member.pk}}">Update</a>
+                </td>
+                <td>
+                    <a href="/member/remove/{{member.pk}}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+
+    <p>
+        <a href="{% url 'memberinsert' %}"><-- Go To Home Page</a>
+    </p>
+</body>
+
+</html>

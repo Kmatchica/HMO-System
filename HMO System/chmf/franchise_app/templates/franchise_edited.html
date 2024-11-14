@@ -1,0 +1,247 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Update Access History and Details</th>
+            </tr>
+            <tr>
+                <td>Client Name (Current)
+                    <input type="text" name="clientname" value="{{ Franchise.clientname }}">
+                </td>
+                <td>Client Name (Update)
+                    <input type="text" name="clientname" value="{{ Historyfranchise.clientname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Short Name (Current)
+                    <input type="text" name="clientshortname" value="{{ Franchise.clientshortname }}">
+                </td>
+                <td>Client Short Name (Update)
+                    <input type="text" name="clientshortname" value="{{ Historyfranchise.clientshortname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Client Classification Code (Current)
+                    <input type="number" name="clientclassificationcode" value="{{ Franchise.clientclassificationcode }}">
+                </td>
+                <td>Client Classification Code (Update)
+                    <input type="number" name="clientclassificationcode" value="{{ Historyfranchise.clientclassificationcode }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Address (Current)
+                    <input type="text" name="address" value="{{ Franchise.address }}">
+                </td>
+                <td>Address (Update)
+                    <input type="text" name="address" value="{{ Historyfranchise.address }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Number (Current)
+                    <input type="text" name="contactnumber" value="{{ Franchise.contactnumber }}">
+                </td>
+                <td>Contact Number (Update)
+                    <input type="text" name="contactnumber" value="{{ Historyfranchise.contactnumber }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Email (Current)
+                    <input type="email" name="email" value="{{ Franchise.email }}">
+                </td>
+                <td>Email (Update)
+                    <input type="email" name="email" value="{{ Historyfranchise.email }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person (Current)
+                    <input type="text" name="contactperson" value="{{ Franchise.contactperson }}">
+                </td>
+                <td>Contact Person (Update)
+                    <input type="text" name="contactperson" value="{{ Historyfranchise.contactperson }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Contact Person Designation (Current)
+                    <input type="text" name="contactpersondesignation" value="{{ Franchise.contactpersondesignation }}">
+                </td>
+                <td>Contact Person Designation (Update)
+                    <input type="text" name="contactpersondesignation" value="{{ Historyfranchise.contactpersondesignation }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Name (Current)
+                    <input type="text" name="signatoryname" value="{{ Franchise.signatoryname }}">
+                </td>
+                <td>Signatory Name (Update)
+                    <input type="text" name="signatoryname" value="{{ Historyfranchise.signatoryname }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Signatory Designation (Current)
+                    <input type="text" name="signatorydesignation" value="{{ Franchise.signatorydesignation }}">
+                </td>
+                <td>Signatory Designation (Update)
+                    <input type="text" name="signatorydesignation" value="{{ Historyfranchise.signatorydesignation }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Total Members (Current)
+                    <input type="number" name="totalmembers" value="{{ Franchise.totalmembers }}">
+                </td>
+                <td>Total Members (Update)
+                    <input type="number" name="totalmembers" value="{{ Historyfranchise.totalmembers }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Total Dependents (Current)
+                    <input type="number" name="totaldependents" value="{{ Franchise.totaldependents }}">
+                </td>
+                <td>Total Dependents (Update)
+                    <input type="number" name="totaldependents" value ="{{ Historyfranchise.totaldependents }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Total Employees (Current)
+                    <input type="number" name="totalemployees" value="{{ Franchise.totalemployees }}">
+                </td>
+                <td>Total Employees (Update)
+                    <input type="number" name="totalemployees" value="{{ Historyfranchise.totalemployees }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Existing HMO (Current)
+                    <input type="text" name="existinghmo" value="{{ Franchise.existinghmo }}">
+                </td>
+                <td>Existing HMO (Update)
+                    <input type="text" name="existinghmo" value="{{ Historyfranchise.existinghmo }}">
+                </td>
+            </tr>
+            <tr>
+                <td>SOB Type ID (Current)
+                    <input type="number" name="sobtypeid" value="{{ Franchise.sobtypeid }}">
+                </td>
+                <td>SOB Type ID (Update)
+                    <input type="number" name="sobtypeid" value="{{ Historyfranchise.sobtypeid }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Means of Knowing ID (Current)
+                    <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
+                        {% for MeansofFranchise in MeansOfFranchise %}
+                            <option value="{{ MeansofFranchise.meansofknowingid}}"{% if Franchise.meansofknowingid == MeansofFranchise.meansofknowingid %}selected{% endif %} required>{{MeansofFranchise.means}}</option>
+                            {% endfor %}
+                        </select>
+                </td>
+                <td>Means of Knowing ID (Update)
+                    <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
+                        {% for historymeansoffranchise in Historymeansoffranchise %}
+                            <option value="{{ historymeansoffranchise.meansofknowingid}}"{% if Historyfranchise.meansofknowingid == historymeansoffranchise.meansofknowingid %}selected{% endif %} required>{{historymeansoffranchise.means}}</option>
+                            {% endfor %}
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Referred By (Current)
+                    <input type="text" name="referredby" value="{{ Franchise.referredby }}">
+                </td>
+                <td>Referred By (Update)
+                    <input type="text" name="referredby" value="{{ Historyfranchise.referredby }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Franchise Status ID (Current)
+                    <select name="franchisestatusid" id="franchisestatusid" class="reload-dropdown" required>
+                        {% for Franchisestatus in FranchiseStatus %}
+                            <option value="{{ Franchisestatus.franchisestatusid}}" {% if Franchise.franchisestatusid == Franchisestatus.franchisestatusid %}selected{% endif %} required>{{Franchisestatus.franhcisestatusname}}</option>
+                        {% endfor %}
+                        </select>
+                </td>
+                <td>Franchise Status ID (Update)
+                    <select name="franchisestatusid" id="franchisestatusid" class="reload-dropdown" required>
+                        {% for Historyfranchisestatus in HistoryfranchiseStatus %}
+                            <option value="{{ Historyfranchisestatus.franchisestatusid}}" {% if Historyfranchise.franchisestatusid == Historyfranchisestatus.franchisestatusid %}selected{% endif %} required>{{Historyfranchisestatus.franhcisestatusname}}</option>
+                        {% endfor %}
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Disapproval Reason (Current)
+                    <input type="text" name="disapprovalreason" value="{{ Franchise.disapprovalreason }}">
+                </td>
+                <td>Disapproval Reason (Update)
+                    <input type="text" name="disapprovalreason" value="{{ Historyfranchise.disapprovalreason }}">
+                </td>
+            </tr>
+            <tr>
+                <td>ISTPA (Current)
+                    <input type="text" name="istpa" value="{{ Franchise.istpa }}">
+                </td>
+                <td>ISTPA (Update)
+                    <input type="text" name="istpa" value="{{ Historyfranchise.istpa }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Admin Fee (Current)
+                    <input type="text" name="adminfee" value="{{ Franchise.adminfee }}">
+                </td>
+                <td>Admin Fee (Update)
+                    <input type="text" name="adminfee" value="{{ Historyfranchise.adminfee }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Network Access Fee (Current)
+                    <input type="text" name="networkaccessfee" value="{{ Franchise.networkaccessfee }}">
+                </td>
+                <td>Network Access Fee (Update)
+                    <input type="text" name="networkaccessfee" value="{{ Historyfranchise.networkaccessfee }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Location Code (Current)
+                    <input type="number" name="locationcode" value="{{ Franchise.locationcode }}">
+                </td>
+                <td>Location Code (Update)
+                    <input type="number" name="locationcode" value="{{ Historyfranchise.locationcode }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks (Current)
+                    <input type="text" name="remarks" value="{{ Franchise.remarks }}">
+                </td>
+                <td>Remarks (Update)
+                    <input type="text" name="remarks" value="{{ Historyfranchise.remarks }}">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="delete">
+                </td>
+            </tr>
+            
+        </table>
+    </form>
+</body>
+</html>

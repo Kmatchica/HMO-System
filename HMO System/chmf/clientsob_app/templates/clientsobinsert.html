@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Client SOB</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post">
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+        {% csrf_token %}
+        
+        
+        <table  align="center"  border="2px solid "id="clientinsert">
+            <tr>
+                <th>Create Client SOB</th>
+            </tr>
+			<tr>
+                <td>Client Code
+                    <select name="clientcode" id="clientcode" required>
+                        {% for client in clients %}
+                            <option value="{{ client.clientcode }}">
+                                {{ client.clientname }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>SOB Code
+                    <input type="number" name="sobcode" id="sobcode">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks
+                    <input type="text" name="remarks" id="remarks">
+                </td>
+            </tr>
+         
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+   
+</div>
+</body>
+</html>

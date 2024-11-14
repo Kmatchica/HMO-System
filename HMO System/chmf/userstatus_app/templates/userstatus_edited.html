@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <table align="center"  border="2px solid">
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+            <tr>
+                <th colspan="2">Update Access History and Details</th>
+            </tr>
+            <tr>
+                <td>Record Number (Current)
+                    <input type="text" name="recordno" value="{{Userstatus.recordno}}" disabled>
+                </td>
+                <td>Record Number (Update)
+                    <input type="text" name="recordno" value="{{Historyuserstatus.recordno}}" disabled>
+                </td>
+            </tr>
+			<tr>
+                <td>Userstatus Code (Current)
+                    <input type="text" name="userstatuscode" value="{{Userstatus.userstatuscode}}"disabled>
+                </td>
+                <td>Userstatus Code (Update)
+                    <input type="text" name="userstatuscode" value="{{Historyuserstatus.userstatuscode}}"disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>Userstatus Name (Current)
+                    <input type="text" name="userstatusname" value="{{Userstatus.userstatusname}}">
+                </td>
+                <td>Userstatus Name (Update)
+                    <input type="text" name="userstatusname" value="{{Historyuserstatus.userstatusname}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Remarks (Current)
+                    <input type="text" name="remarks" value="{{Userstatus.remarks}}">
+                </td>
+                <td>Remarks (Update)
+                    <input type="text" name="remarks" value="{{Historyuserstatus.remarks}}">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Submit" class="btn btn-success" name="submit">
+                    <input type="submit" value="Delete" class="btn btn-danger" name="delete">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

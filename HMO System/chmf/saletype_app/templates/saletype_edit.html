@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CoopAgent</title>
+    <style>
+        td, th, table {
+            padding: 5px;
+            align-items: center;
+            border: 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Sale Type</th>
+            </tr>
+            <tr>
+                <td>Saletype Name
+                <input type="text" value="{{ Saletype.salestypename }}" name="salestypename"></td>
+            </tr>
+            <tr>
+                <td>Saletype Short Name
+                <input type="text" value="{{ Saletype.salestypeshortname }}" name="salestypeshortname"></td>
+            </tr>
+            <tr>
+                <td>Commission Percent
+                <input type="text" value="{{ Saletype.commissionpercent }}" name="commissionpercent"></td>
+            </tr>
+            <tr>
+                <td>Remarks
+                <input type="text" value="{{ Saletype.remarks }}" name="remarks"></td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <input type="submit" value="submit" class="btn btn-success">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

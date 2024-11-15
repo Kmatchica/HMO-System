@@ -123,7 +123,7 @@ DATABASES = {
             'options': '-c search_path=users'},
         'NAME': 'employee.db',
         'USER':'postgres',
-        'PASSWORD':'1CHMF2022',
+        'PASSWORD':'kemzganda',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -222,3 +222,10 @@ LOGGING = {
 
 ##################setting
 
+###Global variables
+GLOBAL_VARIABLES = {
+    'TRANSACT-TYPE-ADD' : 'add',
+    'TRANSACT-TYPE-EDIT' : 'edit',
+    'TRANSACT-TYPE-DELETE' : 'delete',
+    'TRANSACT-TYPE-FORAPPROVAL' : 'forapproval',
+}

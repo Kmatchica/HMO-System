@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.db.models.functions import Upper
 from clientclassification_app.models import clientclassification
 from clientstatus_app.models import clientstatus
+from utils.utils import generate_code
 
 def clientinsert(request):   
     clientClassificationList = clientclassification.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
@@ -33,9 +34,8 @@ def clientinsert(request):
         transactby = 0
         transactdate = datetime.now()
         transactype = 'add'
-        clientcode_max = client.objects.all().aggregate(Max('clientcode'))
-        clientcode_nextvalue = 1 if clientcode_max['clientcode__max'] == None else clientcode_max['clientcode__max'] + 1
-        data = client(clientcode = clientcode_nextvalue, 
+        clientcode = generate_code(client, 'clientcode', padding_width=5)
+        data = client(clientcode = clientcode, 
                         clientparentcode=clientparentcode,
                         clientclassificationcode = clientclassificationcode,
                         clientname = clientname,

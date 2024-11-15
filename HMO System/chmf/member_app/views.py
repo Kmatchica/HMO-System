@@ -9,6 +9,8 @@ from django.db.models.functions import Upper
 from django.conf import settings
 from membergender_app.models import membergender
 from memberstatus_app.models import memberstatus
+from utils.utils import generate_code, generate_policy_number
+from client_app.models import client
 # Create your views here.
 ########################## new function##################### 
 
@@ -17,11 +19,13 @@ from memberstatus_app.models import memberstatus
 def memberinsert(request):   
     memberStatus = memberstatus.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     memberGender = membergender.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
+    Clients = client.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     if request.method == "POST":
-        policynumber = request.POST['policynumber'].strip().replace("  ", " ").title()
+        membercode = generate_code(member, 'membercode', padding_width=6)
+        policynumber = generate_policy_number(request.POST['clientcode'], membercode)
         thirdpartyid = request.POST['thirdpartyid'].strip().replace("  ", " ").title()
         otherid = request.POST['otherid'].strip().replace("  ", " ").title()
-        clientcode = request.POST['clientcode'].strip().replace("  ", " ").title()
+        clientcode = client.objects.get(clientcode=request.POST['clientcode'])
         branchcode = int(request.POST['branchcode'])
         membertypecode = int(request.POST['membertypecode'])
         lastname = request.POST['lastname'].strip().replace("  ", " ").title()
@@ -47,15 +51,14 @@ def memberinsert(request):
         remarks = request.POST['remarks'].strip().replace("  ", " ").title()
         transactby = 0
         transactdate = datetime.now()
-        membercode_max = member.objects.all().aggregate(Max('membercode'))
-        membercode_nextvalue = 1 if membercode_max['membercode__max'] == None else membercode_max['membercode__max'] + 1
+        membercode = generate_code(member, 'membercode', padding_width=6)
         if member.objects.annotate(uppercase_membername=Upper('firstname')).filter(uppercase_membername=firstname.upper()):
             if member.objects.annotate(uppercase_membername=Upper('middlename')).filter(uppercase_membername=middlename.upper()):
                 if member.objects.annotate(uppercase_membername=Upper('lastname')).filter(uppercase_membername=lastname.upper()):
                     messages.error(request, "Member Status Name already Exist.") 
         else:
             data = member(
-                            membercode = membercode_nextvalue, 
+                            membercode = membercode, 
                             policynumber = policynumber,
                             thirdpartyid = thirdpartyid,
                             otherid = otherid,
@@ -89,17 +92,17 @@ def memberinsert(request):
             data.save()
             historymember_save(data, settings.GLOBAL_VARIABLES['TRANSACT-TYPE-ADD'])
             return redirect('/member')    
-        return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus})  
-    return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus})  
+        return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus, 'Clients' : Clients})  
+    return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus, 'Clients' : Clients})  
 
 def membershow(request):
     Members = member.objects.exclude(transactype = 'delete')
     return render(request,'membershow.html', {'memberList':Members})
-
 def memberedit(request,pk):
     Member = member.objects.get(recordno=pk)
     memberStatus = memberstatus.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     memberGender = membergender.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
+    Clients = client.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     if request.method == 'POST':
             print(request.POST)
             Member.policynumber = request.POST['policynumber']
@@ -133,7 +136,7 @@ def memberedit(request,pk):
             historymember_save(Member, settings.GLOBAL_VARIABLES['TRANSACT-TYPE-EDIT'])
             return redirect('/member')
 
-    return render(request,'memberedit.html', {'member' : Member, 'memberStatus':memberStatus, 'memberGender' : memberGender})
+    return render(request,'memberedit.html', {'member' : Member, 'memberStatus':memberStatus, 'memberGender' : memberGender, 'Clients' : Clients})
 
 def memberdelete(request, pk):
     Member = member.objects.get(recordno=pk)

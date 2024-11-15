@@ -5,7 +5,7 @@ from clientstatus_app.models import clientstatus
 
 class client(models.Model):
     recordno = models.BigAutoField(auto_created=True, primary_key=True)
-    clientcode = models.IntegerField(unique=True)
+    clientcode = models.CharField(max_length=100, unique=True)
     clientparentcode = models.IntegerField()
     clientclassificationcode = models.ForeignKey(clientclassification, on_delete=models.DO_NOTHING, to_field='clientclassificationcode')
     clientname = models.CharField(max_length=100)
@@ -32,7 +32,7 @@ class client(models.Model):
 class historyclient(models.Model):
     recordnohist = models.BigAutoField(auto_created=True, primary_key=True)
     recordno = models.IntegerField()
-    clientcode = models.IntegerField()
+    clientcode = models.CharField(max_length=100)
     clientparentcode = models.IntegerField()
     clientclassificationcode = models.ForeignKey(clientclassification, on_delete=models.DO_NOTHING, to_field='clientclassificationcode')
     clientname = models.CharField(max_length=100)

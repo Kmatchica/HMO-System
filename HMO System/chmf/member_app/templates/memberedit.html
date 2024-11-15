@@ -49,9 +49,16 @@
             </tr>
             <tr>
                 <td>Client Code
-                    <input type="text" name="clientcode" id="clientcode" value="{{ member.clientcode }}">
+                    <select name="clientcode" id="clientcode">
+                        {% for client in Clients %}
+                            <option value="{{ client.clientcode }}" {% if member.clientcode.clientcode == client.clientcode  %}selected{% endif %}>
+                                {{ client.clientname }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </td>
             </tr>
+            
             <tr>
                 <td>Branch Code
                     <input type="number" name="branchcode" id="branchcode" value="{{ member.branchcode }}">

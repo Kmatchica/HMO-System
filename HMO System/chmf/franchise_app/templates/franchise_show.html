@@ -39,45 +39,70 @@
                     <tr>
                         <th>Client Name</th>
                         <th>Client Short Name</th>
-                        <th>Civil Status Code</th>
                         <th>Client Classification Code</th>
                         <th>Address</th>
                         <th>Contact Number</th>
+                        <th>Email Address</th>
+                        <th>Contact Person</th>
                         <th>Contactperson Designation</th>
                         <th>Signatory Name</th>
                         <th>Signatory Designation</th>
-                        <th>Totalmembers Code</th>
+                        <th>Totalmembers</th>
+                        <th>Total Dependents</th>
+                        <th>Total Employees</th>
+                        <th>Existing Hmo</th>
+                        <th>Sob Type Name</th>
+                        <th>Means of Knowing</th>
+                        <th>Referred By</th>
+                        <th>Franchise Status</th>
+                        <th>Dissaproval Reason</th>
+                        <th>TPA</th>
+                        <th>Admin Fee</th>
+                        <th>Network Access Fee</th>
+                        <th>Location Code</th>
                         <th>Remarks</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
-                    {% for coopagent in Coopagents %}
+                    {% for franchise in Franchise %}
                     <tr>
-                        
-                        <td>{{coopagent.firstname}}
-                        {{coopagent.middlename}}
-                        {{coopagent.lastname}}</td>
-                        <td>{{coopagent.suffix}}</td>
-                        <td>{{coopagent.civilstatuscode}}</td>
-                        <td>{{coopagent.birthdate}}</td>
-                        <td>{{coopagent.email}}</td>
-                        <td>{{coopagent.departmentcode.departmentname}}</td>
-                        <td>{{coopagent.roleid.rolename}}</td>
-                        <td>{{coopagent.mobilenumber}}</td>
-                        <td>{{coopagent.address}}</td>
-                        <td>{{coopagent.locationcode}}</td>
-                        <td>{{coopagent.remarks}}</td>
+                        <td>{{franchise.clientname}}</td>
+                        <td>{{franchise.clientshortname}}</td>
+                        <td>{{franchise.clientclassificationcode}}</td>
+                        <td>{{franchise.address}}</td>
+                        <td>{{franchise.contactnumber}}</td>
+                        <td>{{franchise.email}}</td>
+                        <td>{{franchise.contactperson}}</td>
+                        <td>{{franchise.contactpersondesignation}}</td>
+                        <td>{{franchise.signatoryname}}</td>
+                        <td>{{franchise.signatorydesignation}}</td>
+                        <td>{{franchise.totalmembers}}</td>
+                        <td>{{franchise.totaldependents}}</td>
+                        <td>{{franchise.totalemployees}}</td>
+                        <td>{{franchise.existinghmo}}</td>
+                        <td>{{franchise.sobtypeid}}</td>
+                        <td>{{franchise.meansofknowingid.means}}</td>
+                        <td>{{franchise.referredby}}</td>
+                        <td>{{franchise.franchisestatusid.franchisestatusname}}</td>
+                        <td>{{franchise.disapprovalreason}}</td>
+                        <td>{{franchise.istpa}}</td>
+                        <td>{{franchise.adminfee}}</td>
+                        <td>{{franchise.networkaccessfee}}</td>
+                        <td>{{franchise.locationcode}}</td>
+                        <td>{{franchise.remarks}}</td>
+                        <td>{{franchise.status}}</td>
                         <td>
-                            {% if coopagent.status == "Deactive" or coopagent.status == "Suspend" or coopagent.status == "Reactive" %}
+                            {% if franchise.status == "Deactive" or franchise.status == "Suspend" or franchise.status == "Reactive" %}
                             <!-- Actions Disabled -->
                             {% else %}
                             {% if show_edit_button %}
-                            <a href="/coopagent/edit/{{coopagent.pk}}">Edit
+                            <a href="/franchise/edit/{{franchise.pk}}">Edit
                                 {% endif %}      
                             </a><br>
                             {% if show_delete_button %}
-                            <a href="/coopagent/remove/{{coopagent.pk}}" >Remove</a>
+                            <a href="/franchise/remove/{{franchise.pk}}" >Remove</a>
                             {% endif %}
                             {% endif %}
                             
@@ -96,41 +121,65 @@
         <table align="center" border="2px solid" id="coopapproval">
             <thead>
                 <tr>
-                    <th>Full Name</th>
-                    <th>Suffix</th>
-                    <th>Civil Status Code</th>
-                    <th>Birth Day</th>
-                    <th>Email Address</th>
-                    <th>Department</th>
-                    <th>Role</th>
-                    <th>Mobile Number</th>
+                    <th>Client Name</th>
+                    <th>Client Short Name</th>
+                    <th>Client Classification Code</th>
                     <th>Address</th>
+                    <th>Contact Number</th>
+                    <th>Email Address</th>
+                    <th>Contact Person</th>
+                    <th>Contactperson Designation</th>
+                    <th>Signatory Name</th>
+                    <th>Signatory Designation</th>
+                    <th>Totalmembers Code</th>
+                    <th>Total Dependents</th>
+                    <th>Total Employees</th>
+                    <th>Existing Hmo</th>
+                    <th>Sob Type Name</th>
+                    <th>Means of Knowing</th>
+                    <th>Referred By</th>
+                    <th>Franchise Status</th>
+                    <th>Dissaproval Reason</th>
+                    <th>TPA</th>
+                    <th>Admin Fee</th>
+                    <th>Network Access Fee</th>
                     <th>Location Code</th>
                     <th>Remarks</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body-approval">
-                {% for historycoopagent in historyapproval %}
+                {% for historyfranchise in historyapproval %}
                 <tr>
-                    
-                    
-                    <td>{{historycoopagent.firstname}}
-                    {{historycoopagent.middlename}}
-                    {{historycoopagent.lastname}}</td>
-                    <td>{{historycoopagent.suffix}}</td>
-                    <td>{{historycoopagent.civilstatuscode}}</td>
-                    <td>{{historycoopagent.birthdate}}</td>
-                    <td>{{historycoopagent.email}}</td>
-                    <td>{{historycoopagent.departmentcode.departmentname}}</td>
-                    <td>{{historycoopagent.roleid.rolename}}</td>
-                    <td>{{historycoopagent.mobilenumber}}</td>
-                    <td>{{historycoopagent.address}}</td>
-                    <td>{{historycoopagent.locationcode}}</td>
-                    <td>{{historycoopagent.remarks}}</td>
+                    <td>{{historyfranchise.clientname}}</td>
+                    <td>{{historyfranchise.clientshortname}}</td>
+                    <td>{{historyfranchise.clientclassificationcode}}</td>
+                    <td>{{historyfranchise.address}}</td>
+                    <td>{{historyfranchise.contactnumber}}</td>
+                    <td>{{historyfranchise.email}}</td>
+                    <td>{{historyfranchise.contactperson}}</td>
+                    <td>{{historyfranchise.contactpersondesignation}}</td>
+                    <td>{{historyfranchise.signatoryname}}</td>
+                    <td>{{historyfranchise.signatorydesignation}}</td>
+                    <td>{{historyfranchise.totalmembers}}</td>
+                    <td>{{historyfranchise.totaldependents}}</td>
+                    <td>{{historyfranchise.totalemployees}}</td>
+                    <td>{{historyfranchise.existinghmo}}</td>
+                    <td>{{historyfranchise.sobtypeid}}</td>
+                    <td>{{historyfranchise.meansofknowingid.means}}</td>
+                    <td>{{historyfranchise.referredby}}</td>
+                    <td>{{historyfranchise.franchisestatusid.franchisestatusname}}</td>
+                    <td>{{historyfranchise.disapprovalreason}}</td>
+                    <td>{{historyfranchise.istpa}}</td>
+                    <td>{{historyfranchise.adminfee}}</td>
+                    <td>{{historyfranchise.networkaccessfee}}</td>
+                    <td>{{historyfranchise.locationcode}}</td>
+                    <td>{{historyfranchise.remarks}}</td>
+                    <td>{{historyfranchise.status}}</td>
                     <td> 
-                        {% if historycoopagent.transactype == "Forapproval" %}
-                        <a href="/coopagent/approval/{{ historycoopagent.pk }}">View</a><br>
+                        {% if historyfranchise.transactype == "Forapproval" %}
+                        <a href="/franchise/approval/{{ historyfranchise.pk }}">View</a><br>
                         {% endif %}
                       
                        
@@ -148,45 +197,65 @@
         <table align="center" border="2px solid" id="coopupdate">
             <thead>
                 <tr>
-                    <th>Record No</th>
-                    <th>Agent ID</th>
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Last Name</th>
-                    <th>Suffix</th>
-                    <th>Civil Status Code</th>
-                    <th>Birth Day</th>
-                    <th>Email Address</th>
-                    <th>Department</th>
-                    <th>Role</th>
-                    <th>Mobile Number</th>
+                    <th>Client Name</th>
+                    <th>Client Short Name</th>
+                    <th>Client Classification Code</th>
                     <th>Address</th>
+                    <th>Contact Number</th>
+                    <th>Email Address</th>
+                    <th>Contact Person</th>
+                    <th>Contactperson Designation</th>
+                    <th>Signatory Name</th>
+                    <th>Signatory Designation</th>
+                    <th>Totalmembers Code</th>
+                    <th>Total Dependents</th>
+                    <th>Total Employees</th>
+                    <th>Existing Hmo</th>
+                    <th>Sob Type Name</th>
+                    <th>Means of Knowing</th>
+                    <th>Referred By</th>
+                    <th>Franchise Status</th>
+                    <th>Dissaproval Reason</th>
+                    <th>TPA</th>
+                    <th>Admin Fee</th>
+                    <th>Network Access Fee</th>
                     <th>Location Code</th>
                     <th>Remarks</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body-update">
-                {% for historycoopagent in historyupdate %}
+                {% for historyfranchise in historyupdate %}
                 <tr>    
-                    <td>{{historycoopagent.recordno}}</td>
-                    <td>{{historycoopagent.agentid}}</td>
-                    <td>{{historycoopagent.firstname}}</td>
-                    <td>{{historycoopagent.middlename}}</td>
-                    <td>{{historycoopagent.lastname}}</td>
-                    <td>{{historycoopagent.suffix}}</td>
-                    <td>{{historycoopagent.civilstatuscode}}</td>
-                    <td>{{historycoopagent.birthdate}}</td>
-                    <td>{{historycoopagent.email}}</td>
-                    <td>{{historycoopagent.departmentcode.departmentname}}</td>
-                    <td>{{historycoopagent.roleid.rolename}}</td>
-                    <td>{{historycoopagent.mobilenumber}}</td>
-                    <td>{{historycoopagent.address}}</td>
-                    <td>{{historycoopagent.locationcode}}</td>
-                    <td>{{historycoopagent.remarks}}</td>
-                    <td>
-                        {% if historycoopagent.transactype == "Forupdate" %}
-                        <a href="/coopagent/edited/{{historycoopagent.pk}}">View</a><br>
+                    <td>{{historyfranchise.clientname}}</td>
+                    <td>{{historyfranchise.clientshortname}}</td>
+                    <td>{{historyfranchise.clientclassificationcode}}</td>
+                    <td>{{historyfranchise.address}}</td>
+                    <td>{{historyfranchise.contactnumber}}</td>
+                    <td>{{historyfranchise.email}}</td>
+                    <td>{{historyfranchise.contactperson}}</td>
+                    <td>{{historyfranchise.contactpersondesignation}}</td>
+                    <td>{{historyfranchise.signatoryname}}</td>
+                    <td>{{historyfranchise.signatorydesignation}}</td>
+                    <td>{{historyfranchise.totalmembers}}</td>
+                    <td>{{historyfranchise.totaldependents}}</td>
+                    <td>{{historyfranchise.totalemployees}}</td>
+                    <td>{{historyfranchise.existinghmo}}</td>
+                    <td>{{historyfranchise.sobtypeid}}</td>
+                    <td>{{historyfranchise.meansofknowingid.means}}</td>
+                    <td>{{historyfranchise.referredby}}</td>
+                    <td>{{historyfranchise.franchisestatusid.franchisestatusname}}</td>
+                    <td>{{historyfranchise.disapprovalreason}}</td>
+                    <td>{{historyfranchise.istpa}}</td>
+                    <td>{{historyfranchise.adminfee}}</td>
+                    <td>{{historyfranchise.networkaccessfee}}</td>
+                    <td>{{historyfranchise.locationcode}}</td>
+                    <td>{{historyfranchise.remarks}}</td>
+                    <td>{{historyfranchise.status}}</td>
+                    <td> 
+                        {% if historyfranchise.transactype == "Forupdate" %}
+                        <a href="/franchise/edited/{{historyfranchise.pk}}">View</a><br>
                         {% endif %}
                         
                        
@@ -207,41 +276,67 @@
                 <tr>
                     
                     
-                    <th>Full Name</th>
-                    <th>Suffix</th>
-                    <th>Civil Status Code</th>
-                    <th>Birth Day</th>
-                    <th>Email Address</th>
-                    <th>Department</th>
-                    <th>Role</th>
-                    <th>Mobile Number</th>
+                    <th>Client Name</th>
+                    <th>Client Short Name</th>
+                    <th>Client Classification Code</th>
                     <th>Address</th>
+                    <th>Contact Number</th>
+                    <th>Email Address</th>
+                    <th>Contact Person</th>
+                    <th>Contactperson Designation</th>
+                    <th>Signatory Name</th>
+                    <th>Signatory Designation</th>
+                    <th>Totalmembers Code</th>
+                    <th>Total Dependents</th>
+                    <th>Total Employees</th>
+                    <th>Existing Hmo</th>
+                    <th>Sob Type Name</th>
+                    <th>Means of Knowing</th>
+                    <th>Referred By</th>
+                    <th>Franchise Status</th>
+                    <th>Dissaproval Reason</th>
+                    <th>TPA</th>
+                    <th>Admin Fee</th>
+                    <th>Network Access Fee</th>
                     <th>Location Code</th>
                     <th>Remarks</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body-termindate">
-                {% for historycoopagent in historyterminate %}
+                {% for historyfranchise in historyterminate %}
                 <tr>
                     
                     
-                    <td>{{historycoopagent.firstname}},
-                    {{historycoopagent.middlename}}
-                    {{historycoopagent.lastname}}</td>
-                    <td>{{historycoopagent.suffix}}</td>
-                    <td>{{historycoopagent.civilstatuscode}}</td>
-                    <td>{{historycoopagent.birthdate}}</td>
-                    <td>{{historycoopagent.email}}</td>
-                    <td>{{historycoopagent.departmentcode.departmentname}}</td>
-                    <td>{{historycoopagent.roleid.rolename}}</td>
-                    <td>{{historycoopagent.mobilenumber}}</td>
-                    <td>{{historycoopagent.address}}</td>
-                    <td>{{historycoopagent.locationcode}}</td>
-                    <td>{{historycoopagent.remarks}}</td>
-                    <td>
-                        {% if historycoopagent.transactype == "Forterminate" %}
-                            <a href="/coopagent/terminate/{{ historycoopagent.pk }}">View</a>
+                    <td>{{historyfranchise.clientname}}</td>
+                    <td>{{historyfranchise.clientshortname}}</td>
+                    <td>{{historyfranchise.clientclassificationcode}}</td>
+                    <td>{{historyfranchise.address}}</td>
+                    <td>{{historyfranchise.contactnumber}}</td>
+                    <td>{{historyfranchise.email}}</td>
+                    <td>{{historyfranchise.contactperson}}</td>
+                    <td>{{historyfranchise.contactpersondesignation}}</td>
+                    <td>{{historyfranchise.signatoryname}}</td>
+                    <td>{{historyfranchise.signatorydesignation}}</td>
+                    <td>{{historyfranchise.totalmembers}}</td>
+                    <td>{{historyfranchise.totaldependents}}</td>
+                    <td>{{historyfranchise.totalemployees}}</td>
+                    <td>{{historyfranchise.existinghmo}}</td>
+                    <td>{{historyfranchise.sobtypeid}}</td>
+                    <td>{{historyfranchise.meansofknowingid.means}}</td>
+                    <td>{{historyfranchise.referredby}}</td>
+                    <td>{{historyfranchise.franchisestatusid.franchisestatusname}}</td>
+                    <td>{{historyfranchise.disapprovalreason}}</td>
+                    <td>{{historyfranchise.istpa}}</td>
+                    <td>{{historyfranchise.adminfee}}</td>
+                    <td>{{historyfranchise.networkaccessfee}}</td>
+                    <td>{{historyfranchise.locationcode}}</td>
+                    <td>{{historyfranchise.remarks}}</td>
+                    <td>{{historyfranchise.status}}</td>
+                    <td> 
+                        {% if historyfranchise.transactype == "Forterminate" %}
+                            <a href="/franchise/terminate/{{ historyfranchise.pk }}">View</a>
                             {% endif %}  
                     </td>
                 </tr>
@@ -255,7 +350,7 @@
 
         <!-- Create Access Button -->
         {% if show_insert_button %}
-        <a href="{% url 'coopagent_insert' %}">Create Coop Agent</a>
+        <a href="{% url 'franchise_insert' %}">Create Coop Agent</a>
         {% endif %}
 
 <script>

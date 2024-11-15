@@ -70,14 +70,14 @@ def franchise_insert(request):
                     Transactype = 'Forapproval'
                     status = 'Active'
                     Status = 'For approval'
-                    franchisecode_max = historyfranchise.objects.all().aggregate(Max('recordnohist'))
-                    franchisecode_nextvalue = 1 if franchisecode_max['franchisecode__max'] == None else franchisecode_max['franchisecode__max'] + 1
+                    recordnohist_max = historyfranchise.objects.all().aggregate(Max('recordnohist')) 
+                    recordno_nextvalue = 1 if recordnohist_max['recordnohist__max'] == None else recordnohist_max['recordnohist__max']+ 1     
                     if franchise.objects.annotate(uppercase_clientname=Upper('clientname')).filter(uppercase_clientname=clientname.upper()):
                         messages.error(request, "The Clientname is already Exist.")  
                     else:
                         if has_permission(request.user,['approver','Approver']):
                             data = franchise(
-                            franchisecode=franchisecode_nextvalue,
+                            franchisecode=recordno_nextvalue,
                             clientname=clientname,
                             clientshortname=clientshortname,
                             clientclassificationcode=clientclassificationcode,
@@ -147,8 +147,8 @@ def franchise_insert(request):
                             status=Status)
                             data.save()
                             return redirect('franchise_show')
-                    return render(request, 'franchise_insert.html',{'MeansOfFranchise':MeansOfFranchise,'FranchiseStatus':FranchiseStatus})
-        return redirect('franchise_insert')
+                return render(request, 'franchise_insert.html',{'MeansOfFranchise':MeansOfFranchise,'FranchiseStatus':FranchiseStatus})
+        return redirect('franchise_show')
     return redirect('login')
         
 @login_required
@@ -157,6 +157,8 @@ def franchise_approval(request,pk):
         userRoleid = request.user.roleid
         userRoleid = userRoleid.roleid
         if has_permission(request.user, ['approver','Approver']):
+                MeansOfFranchise = MeansofFranchise.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove'])
+                FranchiseStatus = Franchisestatus.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove'])
                 Historyfranchise = historyfranchise.objects.get(recordnohist=pk)
                 transactype = 'add'
                 if request.method == 'POST':
@@ -165,7 +167,6 @@ def franchise_approval(request,pk):
                             Historyfranchise.status = 'Disapprove'
                             Historyfranchise.save()             
                     else:
-                        recordno = Historyfranchise.recordno,
                         franchisecode=Historyfranchise.franchisecode,
                         clientname=Historyfranchise.clientname,
                         clientshortname=Historyfranchise.clientshortname,
@@ -230,7 +231,8 @@ def franchise_approval(request,pk):
                         Historyfranchise.transactype = 'Approve'
                         Historyfranchise.save()                  
                     return redirect('franchise_show')               
-                return render(request,'franchise_approval.html',{'Historyfranchise': Historyfranchise})        
+                return render(request,'franchise_approval.html',{'Historyfranchise': Historyfranchise,'FranchiseStatus': FranchiseStatus,'MeansOfFranchise': MeansOfFranchise}) 
+        return redirect('home')        
     return redirect('login')        
 
 @login_required   
@@ -374,8 +376,8 @@ def franchise_edit(request,pk):
                                             transactype=transactypes, 
                                             status=status)      
                     data.save() 
-                    return redirect('coopagent_show')            
-            return render(request,'coopagent_edit.html',{'MeansOfFranchise': MeansOfFranchise,'FranchiseStatus': FranchiseStatus,'Franchise': Franchise})       
+                    return redirect('franchise_show')            
+            return render(request,'franchise_edit.html',{'MeansOfFranchise': MeansOfFranchise,'FranchiseStatus': FranchiseStatus,'Franchise': Franchise})       
         return redirect('home')
     return redirect('login')     
 

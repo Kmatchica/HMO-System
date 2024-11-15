@@ -36,7 +36,7 @@
                     <td>Providers Name
                         <select name="providercode" id="providercode">
                         {% for provider in Provider %}
-                            <option value="{{ provider.providercode }}" {% if PayableName.providercode.providercode == provider.providercode %}selected{% endif %}>{{ provider.providername }}</option>
+                            <option value="{{ provider.providercode }}">{{ provider.providername }}</option>
                             {% endfor %}
                         </select>
                     </td>

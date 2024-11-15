@@ -27,11 +27,11 @@
             <tr>
                 <th>Create Member</th>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>Policy Number
                     <input type="text" name="policynumber" id="policynumber">
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <td>Third Party ID
                     <input type="text" name="thirdpartyid" id="thirdpartyid">
@@ -44,7 +44,13 @@
             </tr>
             <tr>
                 <td>Client Code
-                    <input type="text" name="clientcode" id="clientcode">
+                    <select name="clientcode" id="clientcode" required>
+                        {% for client in Clients %}
+                            <option value="{{ client.clientcode }}">
+                                {{ client.clientname }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </td>
             </tr>
             <tr>

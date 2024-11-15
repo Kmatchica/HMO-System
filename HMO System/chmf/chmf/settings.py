@@ -123,7 +123,7 @@ DATABASES = {
             'options': '-c search_path=users'},
         'NAME': 'employee.db',
         'USER':'postgres',
-        'PASSWORD':'kemzganda',
+        'PASSWORD':'1CHMF2022',
         'HOST': 'localhost',
         'PORT': '5432'
     }

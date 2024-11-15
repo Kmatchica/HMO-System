@@ -126,6 +126,7 @@ DATABASES = {
         'PASSWORD':'1CHMF2022',
         'HOST': 'localhost',
         'PORT': '5432'
+        # '1CHMF2022''kemzganda'
     }
 }
 

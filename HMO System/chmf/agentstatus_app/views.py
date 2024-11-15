@@ -10,21 +10,10 @@ from django.urls import resolve
 from django.contrib import messages
 from django.db.models.functions import Upper
 from django.db.models import Q
+from django.apps import apps
+from utils.utils import has_permission, get_app_config
 
-# Create your views here.
-def has_permission(user, access_names):
-    """Check if the user has the required permissions."""
-    if user.is_authenticated:
-        userRoleid = user.roleid.roleid
-        permissions = permission.objects.filter(roleid=userRoleid)
-        modulelist = moduleslist.objects.filter(moduleappname='agentstatus_app')
-        modulecodes = [module.modulecode for module in modulelist]
-        permissions = permissions.filter(modulecode__in=modulecodes)
-        accesscodes = access.objects.filter(accessname__in=access_names, status='Active').values_list('accesscode', flat=True)
-        permissions = permissions.filter(accesscode__in=accesscodes)
-        holder_values = [perm.holder for perm in permissions]
-        return holder_values and holder_values[0] == 1
-    return False
+['List','Edit', ]
 
 
 @login_required
@@ -32,7 +21,8 @@ def agentstatus_insert(request):
     if request.user.is_authenticated:
         userRoleid = request.user.roleid
         userRoleid = userRoleid.roleid
-        if has_permission(request.user, ['ADD', 'Add', 'Insert', 'INSERT']):
+        app_name = get_app_config()
+        if has_permission(request.user, ['ADD', 'Add', 'Insert', 'INSERT'], app_name):
             if request.method == "POST":
                 agentstatusname = request.POST['agentstatusname'].strip().replace("  ", " ").title()
                 remarks = request.POST['remarks'].strip().replace("  ", " ").title()
@@ -105,7 +95,7 @@ def agentstatus_show(request):
     if request.user.is_authenticated:   
         userRoleid = request.user.roleid
         userRoleid = userRoleid.roleid
-        if has_permission(request.user, ['LIST', 'List','View', 'SHOW']):    
+        if has_permission(request.user, ['LIST', 'List','View', 'SHOW'], 'agentstatus_app'):    
             Agentstatus = agentstatus.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove'])
             historyupdate = historyagentstatus.objects.filter(transactype__in=['Forupdate'])
             historyterminate = historyagentstatus.objects.filter(transactype__in=['Forterminate'])

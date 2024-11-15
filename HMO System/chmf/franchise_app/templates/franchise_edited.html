@@ -150,15 +150,15 @@
                 <td>Means of Knowing ID (Current)
                     <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
                         {% for MeansofFranchise in MeansOfFranchise %}
-                            <option value="{{ MeansofFranchise.meansofknowingid}}"{% if Franchise.meansofknowingid == MeansofFranchise.meansofknowingid %}selected{% endif %} required>{{MeansofFranchise.means}}</option>
+                            <option value="{{ MeansofFranchise.meansofknowingid}}"{% if Franchise.meansofknowingid.meansofknowingid == MeansofFranchise.meansofknowingid %}selected{% endif %} required>{{MeansofFranchise.means}}</option>
                             {% endfor %}
                         </select>
                 </td>
-                <td>Means of Knowing ID (Update)
+                <td>Means of Knowing Name
                     <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
-                        {% for historymeansoffranchise in Historymeansoffranchise %}
-                            <option value="{{ historymeansoffranchise.meansofknowingid}}"{% if Historyfranchise.meansofknowingid == historymeansoffranchise.meansofknowingid %}selected{% endif %} required>{{historymeansoffranchise.means}}</option>
-                            {% endfor %}
+                        {% for MeansofFranchise in MeansOfFranchise %}
+                            <option value="{{ MeansofFranchise.meansofknowingid}}" {% if Historyfranchise.meansofknowingid.meansofknowingid == MeansofFranchise.meansofknowingid %}selected{% endif %} required>{{MeansofFranchise.means}}</option>
+                        {% endfor %}
                         </select>
                 </td>
             </tr>
@@ -171,17 +171,18 @@
                 </td>
             </tr>
             <tr>
-                <td>Franchise Status ID (Current)
+                
+                <td>Franchise Status Name
                     <select name="franchisestatusid" id="franchisestatusid" class="reload-dropdown" required>
                         {% for Franchisestatus in FranchiseStatus %}
-                            <option value="{{ Franchisestatus.franchisestatusid}}" {% if Franchise.franchisestatusid == Franchisestatus.franchisestatusid %}selected{% endif %} required>{{Franchisestatus.franhcisestatusname}}</option>
-                        {% endfor %}
+                        <option value="{{ Franchisestatus.franchisestatusid}}" {% if Franchise.franchisestatusid.franchisestatusid == Franchisestatus.franchisestatusid %}selected{% endif %} required>{{Franchisestatus.franchisestatusname}}</option>
+                       {% endfor %}
                         </select>
                 </td>
                 <td>Franchise Status ID (Update)
                     <select name="franchisestatusid" id="franchisestatusid" class="reload-dropdown" required>
-                        {% for Historyfranchisestatus in HistoryfranchiseStatus %}
-                            <option value="{{ Historyfranchisestatus.franchisestatusid}}" {% if Historyfranchise.franchisestatusid == Historyfranchisestatus.franchisestatusid %}selected{% endif %} required>{{Historyfranchisestatus.franhcisestatusname}}</option>
+                        {% for Franchisestatus in FranchiseStatus %}
+                            <option value="{{ Franchisestatus.franchisestatusid}}" {% if Historyfranchise.franchisestatusid == Franchisestatus.franchisestatusid %}selected{% endif %} required>{{Franchisestatus.franchisestatusname}}</option>
                         {% endfor %}
                         </select>
                 </td>

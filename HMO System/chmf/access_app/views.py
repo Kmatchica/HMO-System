@@ -79,7 +79,6 @@ def access_approval(request,pk):
                 transactype = 'add'
                 if request.method == 'POST':
                     if 'delete' in request.POST:
-                        if 'delete' in request.POST:
                             Dataaccess.transactype = 'Disapprove'
                             Dataaccess.status = 'Disapprove'
                             Dataaccess.save()

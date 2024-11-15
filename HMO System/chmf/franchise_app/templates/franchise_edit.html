@@ -109,7 +109,7 @@
                 <td>Means of Knowing ID
                     <select name="meansofknowingid" id="meansofknowingid" class="reload-dropdown" required>
                         {% for MeansofFranchise in MeansOfFranchise %}
-                            <option value="{{ MeansofFranchise.meansofknowingid}}"{% if Franchise.meansofknowingid == MeansofFranchise.meansofknowingid %}selected{% endif %} required>{{MeansofFranchise.means}}</option>
+                            <option value="{{ MeansofFranchise.meansofknowingid}}"{% if Franchise.meansofknowingid.meansofknowingid == MeansofFranchise.meansofknowingid %}selected{% endif %} required>{{MeansofFranchise.means}}</option>
                             {% endfor %}
                         </select>
                 </td>
@@ -124,7 +124,7 @@
                 <td>Franchise Status ID
                     <select name="franchisestatusid" id="franchisestatusid" class="reload-dropdown" required>
                         {% for Franchisestatus in FranchiseStatus %}
-                            <option value="{{ Franchisestatus.franchisestatusid}}" {% if Franchise.franchisestatusid == Franchisestatus.franchisestatusid %}selected{% endif %} required>{{Franchisestatus.franhcisestatusname}}</option>
+                            <option value="{{ Franchisestatus.franchisestatusid}}" {% if Franchise.franchisestatusid.franchisestatusid == Franchisestatus.franchisestatusid %}selected{% endif %} required>{{Franchisestatus.franchisestatusname}}</option>
                         {% endfor %}
                         </select>
                 </td>

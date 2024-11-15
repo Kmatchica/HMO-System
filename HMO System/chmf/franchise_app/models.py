@@ -5,7 +5,7 @@ from Franchisestatus_app.models import Franchisestatus
 
 class franchise(models.Model):
     recordno = models.BigAutoField(auto_created=True, primary_key=True)
-    franchisecode= models.IntegerField()
+    franchisecode= models.IntegerField(unique=True)
     clientname= models.CharField(max_length=200)
     clientshortname= models.CharField(max_length=200)
     clientclassificationcode = models.IntegerField()

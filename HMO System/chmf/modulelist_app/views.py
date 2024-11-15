@@ -125,7 +125,7 @@ def modulelist_approval(request,pk):
                         transactby = userRoleid
                         transactdate = datetime.now()                           
                         transactype = transactype
-                        status='active'
+                        status='Active'
                         data = moduleslist(modulecode=modulecode, modulename=modulename, moduleshortname=moduleshortname,moduleappname= moduleappname,remarks= remarks,transactby=transactby,transactdate=transactdate,transactype=transactype, status=status)
                         data.save()                        
                         Historymoduleslist.status = 'Approve'

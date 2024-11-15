@@ -1,14 +1,15 @@
 from django.db import models
 from membergender_app.models import membergender
 from memberstatus_app.models import memberstatus
-
+from client_app.models import client
+from clientbranch_app.models import branch
 class member(models.Model):
         recordno = models.BigAutoField(auto_created=True, primary_key=True)
-        membercode = models.IntegerField()
-        policynumber = models.CharField(max_length=255)
+        membercode = models.CharField(max_length=100, unique=True)
+        policynumber = models.CharField(max_length=255, unique=True)
         thirdpartyid = models.CharField(max_length=255)
         otherid = models.CharField(max_length=255)
-        clientcode = models.CharField(max_length=255)
+        clientcode = models.ForeignKey(client, on_delete=models.DO_NOTHING, to_field='clientcode')
         branchcode = models.IntegerField()
         membertypecode = models.IntegerField()
         lastname = models.CharField(max_length=255)
@@ -55,11 +56,11 @@ class member(models.Model):
 class historymember(models.Model):
         recordnohist = models.BigAutoField(auto_created=True, primary_key=True)
         recordno = models.IntegerField()
-        membercode = models.IntegerField()
+        membercode = models.CharField(max_length=100)
         policynumber = models.CharField(max_length=255)
         thirdpartyid = models.CharField(max_length=255)
         otherid = models.CharField(max_length=255)
-        clientcode = models.CharField(max_length=255)
+        clientcode = models.ForeignKey(client, on_delete=models.DO_NOTHING, to_field='clientcode')
         branchcode = models.IntegerField()
         membertypecode = models.IntegerField()
         lastname = models.CharField(max_length=255)

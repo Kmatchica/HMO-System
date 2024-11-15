@@ -10,31 +10,14 @@ from modulelist_app.models import moduleslist
 from django.urls import resolve
 from django.contrib import messages
 from django.db.models.functions import Upper
-# Create your views here.
-########################## new function#####################
+from utils.utils import has_permission, get_app_config
 from django.db.models import Q
-
-
-# Create your views here.
-
-def has_permission(user, access_names):
-    """Check if the user has the required permissions."""
-    if user.is_authenticated:
-        userRoleid = user.roleid.roleid
-        permissions = permission.objects.filter(roleid=userRoleid)
-        modulelist = moduleslist.objects.filter(moduleappname='access_app')
-        modulecodes = [module.modulecode for module in modulelist]
-        permissions = permissions.filter(modulecode__in=modulecodes)
-        accesscodes = access.objects.filter(accessname__in=access_names, status='Active').values_list('accesscode', flat=True)
-        permissions = permissions.filter(accesscode__in=accesscodes)
-        holder_values = [perm.holder for perm in permissions]
-        return holder_values and holder_values[0] == 1
-    return False
 
 @login_required
 def access_insert(request):
     if request.user.is_authenticated:
-        if has_permission(request.user, ['ADD', 'Add', 'Insert', 'INSERT']):
+        app_name = get_app_config()
+        if has_permission(request.user, ['ADD', 'Add', 'Insert', 'INSERT'], app_name):
                 userRoleid = request.user.roleid
                 userRoleid = userRoleid.roleid
                 moduless = moduleslist.objects.exclude(transactype__in=['delete', 'suspend', 'terminate'])
@@ -96,7 +79,6 @@ def access_approval(request,pk):
                 transactype = 'add'
                 if request.method == 'POST':
                     if 'delete' in request.POST:
-                        if 'delete' in request.POST:
                             Dataaccess.transactype = 'Disapprove'
                             Dataaccess.status = 'Disapprove'
                             Dataaccess.save()

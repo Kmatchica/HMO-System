@@ -79,6 +79,8 @@ INSTALLED_APPS = [
     'medicalavailmenttype_app',
     'medicalapprovalprocedure_app',
     'medicaldiagnosis_app',
+    'medicalapproval_app',
+    'utils',
 ]
 
 MIDDLEWARE = [
@@ -123,7 +125,7 @@ DATABASES = {
             'options': '-c search_path=users'},
         'NAME': 'employee.db',
         'USER':'postgres',
-        'PASSWORD':'kemzganda',
+        'PASSWORD':'CHMF2025',
         'HOST': 'localhost',
         'PORT': '5432'
     }

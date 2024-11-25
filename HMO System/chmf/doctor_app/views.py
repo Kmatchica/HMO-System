@@ -35,6 +35,7 @@ def doctor_insert(request):
                 specializations = specialization.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove'])
                 if request.method == "POST":
                     specializationcode = specialization.objects.get(specializationcode=request.POST['specializationcode'])
+                    subspecializationcode = request.POST['subspecializationcode']
                     firstname = request.POST['firstname'].strip().replace("  ", " ").title()
                     middlename = request.POST['middlename'].strip().replace("  ", " ").title()
                     lastname = request.POST['lastname'].strip().replace("  ", " ").title()
@@ -71,7 +72,7 @@ def doctor_insert(request):
                         holder_values = [permission.holder for permission in permissions]
                         if holder_values:
                             if holder_values[0] == 1:
-                                data = doctor(accreditdate=accreditdate,disaccreditdate=disaccreditdate,reaccreditdate=reaccreditdate,doctorcode=doctorcode_nextvalue, specializationcode=specializationcode, firstname=firstname, middlename=middlename, lastname=lastname,  mobilenumber=mobilenumber, landlinenumber=landlinenumber, emailaddres=emailaddres, address=address, locationcode=locationcode, professionalfee=professionalfee, doctorstatuscode=doctorstatuscode,remarks=remarks,transactby=transactby,transactdate=transactdate,transactype=transactype,status=Status)
+                                data = doctor(subspecializationcode=subspecializationcode,accreditdate=accreditdate,disaccreditdate=disaccreditdate,reaccreditdate=reaccreditdate,doctorcode=doctorcode_nextvalue, specializationcode=specializationcode, firstname=firstname, middlename=middlename, lastname=lastname,  mobilenumber=mobilenumber, landlinenumber=landlinenumber, emailaddres=emailaddres, address=address, locationcode=locationcode, professionalfee=professionalfee, doctorstatuscode=doctorstatuscode,remarks=remarks,transactby=transactby,transactdate=transactdate,transactype=transactype,status=Status)
                                 data.save()
                                 doctorhistory_save(data, transactype)
                                 return redirect('doctor_show')
@@ -472,6 +473,7 @@ def doctorhistory_save(obj, transactype):
         recordno=doctor.recordno,
         doctorcode=doctor.doctorcode,
         specializationcode=doctor.specializationcode,
+        subspecializationcode=doctor.subspecializationcode,
         firstname=doctor.firstname,
         middlename=doctor.middlename,
         lastname=doctor.lastname,

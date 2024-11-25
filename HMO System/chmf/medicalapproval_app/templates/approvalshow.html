@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Approval</title>
+</head>
+<style>
+    table {
+        border: 8px outset;
+        border-radius: 10px;
+        border-spacing: 10px;
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <h2 style="text-align:center"> Medical Approval </h2>
+    <table align="center" border="2px solid" id="membershow">
+        <thead>
+            <tr>
+                <th>Approval Code</th>
+                <th>Policy Number</th>
+                <th>Availment Date</th>
+                <th>Provider Code</th>
+                <th>Doctor Name</th>
+                <th>Caller Name</th>
+                <th>Availment Type Code</th>
+                <th>Initial Diagnosis</th>
+                <th>Final Diagnosis</th>
+                <th>ID Presented</th>
+                <th>Status</th>
+                <th>Disapproved</th>
+                <th>Remarks</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            {% for approval in approvalList %}
+            <tr>
+                <td>{{ approval.approvalcode }}</td>
+                <td>{{ approval.policynumber.policynumber }}</td>
+                <td>{{ approval.availmentdate }}</td>
+                <td>{{ approval.providercode.providername }}</td>
+                <td>{{ approval.doctorcode.firstname }}  {{ approval.doctorcode.lastname }}</td>
+                <td>{{ approval.callername }}</td>
+                <td>{{ approval.availmenttypecode.availmenttypename }}</td>
+                <td>{{ approval.initialdiagnosis.diagnosisname }}</td>
+                <td>{{ approval.finaldiagnosis.diagnosisname }}</td>
+                <td>{{ approval.idpresented }}</td>
+                <td>{{ approval.statuscode.availmentstatusname }}</td>
+                <td>{{ approval.disapproved }}</td>
+                <td>{{ approval.remarks }}</td>
+                <td>
+                    <a href="/medicalapproval/edit/{{approval.pk}}">Update</a>
+                </td>
+                <td>
+                    <a href="/medicalapproval/remove/{{approval.pk}}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+
+    <p>
+        <a href="{% url 'approvalinsert' %}"><-- Go To Home Page</a>
+    </p>
+</body>
+
+</html>

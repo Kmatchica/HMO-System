@@ -1,32 +1,40 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from datetime import datetime
-from .models import member, historymember
+from .models import member, historymember, membergender, memberstatus, client, branch
 from django.db.models import Max
 from django.contrib.auth.decorators import login_required
 from django.urls import resolve
 from django.contrib import messages
 from django.db.models.functions import Upper
 from django.conf import settings
-from membergender_app.models import membergender
-from memberstatus_app.models import memberstatus
 from utils.utils import generate_code, generate_policy_number
-from client_app.models import client
 # Create your views here.
 ########################## new function##################### 
 
+def get_client_branches(request):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':  # Check for AJAX request
+        client_code = request.GET.get('client_code')
+        if not client_code:
+            return JsonResponse({'error': 'client_code is required'}, status=400)
 
+        branches = branch.objects.filter(clientcode=client_code).values('branchcode', 'branchname')
+        return JsonResponse(list(branches), safe=False)
+    
+    return JsonResponse({'error': 'Invalid request type'}, status=400)
 
 def memberinsert(request):   
     memberStatus = memberstatus.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     memberGender = membergender.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     Clients = client.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
+    Branches = branch.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     if request.method == "POST":
         membercode = generate_code(member, 'membercode', padding_width=6)
         policynumber = generate_policy_number(request.POST['clientcode'], membercode)
         thirdpartyid = request.POST['thirdpartyid'].strip().replace("  ", " ").title()
         otherid = request.POST['otherid'].strip().replace("  ", " ").title()
         clientcode = client.objects.get(clientcode=request.POST['clientcode'])
-        branchcode = int(request.POST['branchcode'])
+        branchcode = branch.objects.get(branchcode=request.POST['branchcode'])
         membertypecode = int(request.POST['membertypecode'])
         lastname = request.POST['lastname'].strip().replace("  ", " ").title()
         firstname = request.POST['firstname'].strip().replace("  ", " ").title()
@@ -92,8 +100,8 @@ def memberinsert(request):
             data.save()
             historymember_save(data, settings.GLOBAL_VARIABLES['TRANSACT-TYPE-ADD'])
             return redirect('/member')    
-        return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus, 'Clients' : Clients})  
-    return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus, 'Clients' : Clients})  
+        return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus, 'Clients' : Clients, 'Branches' : Branches})  
+    return render(request, 'memberinsert.html', {'memberGender': memberGender, 'memberStatus': memberStatus, 'Clients' : Clients, 'Branches' : Branches})  
 
 def membershow(request):
     Members = member.objects.exclude(transactype = 'delete')
@@ -103,13 +111,14 @@ def memberedit(request,pk):
     memberStatus = memberstatus.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     memberGender = membergender.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     Clients = client.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
+    Branches = branch.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])
     if request.method == 'POST':
             print(request.POST)
             Member.policynumber = request.POST['policynumber']
             Member.thirdpartyid = request.POST['thirdpartyid']
             Member.otherid = request.POST['otherid']
-            Member.clientcode = request.POST['clientcode']
-            Member.branchcode = request.POST['branchcode']
+            Member.clientcode = client.objects.get(clientcode=request.POST['clientcode'])
+            Member.branchcode = branch.objects.get(branchcode=request.POST['branchcode'])
             Member.membertypecode = request.POST['membertypecode']
             Member.lastname = request.POST['lastname']
             Member.firstname = request.POST['firstname']
@@ -136,7 +145,7 @@ def memberedit(request,pk):
             historymember_save(Member, settings.GLOBAL_VARIABLES['TRANSACT-TYPE-EDIT'])
             return redirect('/member')
 
-    return render(request,'memberedit.html', {'member' : Member, 'memberStatus':memberStatus, 'memberGender' : memberGender, 'Clients' : Clients})
+    return render(request,'memberedit.html', {'member' : Member, 'memberStatus':memberStatus, 'memberGender' : memberGender, 'Clients' : Clients, 'Branches' : Branches})
 
 def memberdelete(request, pk):
     Member = member.objects.get(recordno=pk)

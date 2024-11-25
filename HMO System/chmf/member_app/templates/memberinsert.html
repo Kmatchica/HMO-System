@@ -43,6 +43,7 @@
                 </td>
             </tr>
             <tr>
+                
                 <td>Client Code
                     <select name="clientcode" id="clientcode" required>
                         {% for client in Clients %}
@@ -55,7 +56,13 @@
             </tr>
             <tr>
                 <td>Branch Code
-                    <input type="number" name="branchcode" id="branchcode">
+                    <select name="branchcode" id="branchcode" required>
+                        {% for branch in Branches %}
+                            <option value="{{ branch.branchcode }}">
+                                {{ branch.branchname }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -187,4 +194,25 @@
    
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#clientcode').change(function () {
+            var clientCode = $(this).val();  
+            $('#branchcode').empty().append('<option value="">Select Branch</option>');  
+
+            if (clientCode) {
+                $.ajax({
+                    url: '../get-client-branches/',  
+                    data: { client_code: clientCode },  
+                    success: function (data) {
+                        data.forEach(function (branch) {
+                            $('#branchcode').append('<option value="' + branch.branchcode + '">' + branch.branchname + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
 </html>

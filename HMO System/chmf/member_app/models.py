@@ -10,7 +10,7 @@ class member(models.Model):
         thirdpartyid = models.CharField(max_length=255)
         otherid = models.CharField(max_length=255)
         clientcode = models.ForeignKey(client, on_delete=models.DO_NOTHING, to_field='clientcode')
-        branchcode = models.IntegerField()
+        branchcode = models.ForeignKey(branch, on_delete=models.DO_NOTHING, to_field='branchcode')
         membertypecode = models.IntegerField()
         lastname = models.CharField(max_length=255)
         firstname = models.CharField(max_length=255)
@@ -37,21 +37,7 @@ class member(models.Model):
         transactdate = models.DateTimeField()
         transactype = models.CharField(max_length=50)
         class Meta:
-            db_table="member"
-
-        # def save(self, *args, **kwargs):
-        #         # Generate policy number only if it's not set
-        #         if not self.policynumber:
-        #             # Use clientcode as coop code
-        #             coop_code = self.clientcode[:5].zfill(5)  # Ensure it's exactly 5 characters
-        #             # Format date as MMYY from effectivedate
-        #             date_part = self.effectivedate.strftime("%m%y")
-        #             # Use membercode with zero padding to ensure it is 6 characters
-        #             member_code_formatted = str(self.membercode).zfill(6)
-        #             # Construct the policy number
-        #             self.policynumber = f"{coop_code}-{date_part}-{member_code_formatted}"
-                
-        #         super(member, self).save(*args, **kwargs)     
+            db_table="member"    
 
 class historymember(models.Model):
         recordnohist = models.BigAutoField(auto_created=True, primary_key=True)
@@ -61,7 +47,7 @@ class historymember(models.Model):
         thirdpartyid = models.CharField(max_length=255)
         otherid = models.CharField(max_length=255)
         clientcode = models.ForeignKey(client, on_delete=models.DO_NOTHING, to_field='clientcode')
-        branchcode = models.IntegerField()
+        branchcode = models.ForeignKey(branch, on_delete=models.DO_NOTHING, to_field='branchcode')
         membertypecode = models.IntegerField()
         lastname = models.CharField(max_length=255)
         firstname = models.CharField(max_length=255)

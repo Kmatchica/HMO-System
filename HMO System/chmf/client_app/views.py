@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.db.models.functions import Upper
 from clientclassification_app.models import clientclassification
 from clientstatus_app.models import clientstatus
-from utils.utils import generate_code
+from utils.utils import generate_code, validate_field
 
 def clientinsert(request):   
     clientClassificationList = clientclassification.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])

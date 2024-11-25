@@ -61,7 +61,13 @@
             
             <tr>
                 <td>Branch Code
-                    <input type="number" name="branchcode" id="branchcode" value="{{ member.branchcode }}">
+                    <select name="branchcode" id="branchcode">
+                        {% for branch in Branches %}
+                            <option value="{{ branch.branchcode }}" {% if member.branchcode.branchcode == branch.branchcode  %}selected{% endif %}>
+                                {{ branch.branchname }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </td>
             </tr>
             <tr>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Medical Approval</title>
+    <style>
+        table {
+            border: 8px outset;
+            border-radius: 10px;
+            border-spacing: 10px;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th,
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align:center"> Update Medical Approval </h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table align="center" border="1" id="approvalEditForm">
+            <thead>
+                <tr>
+                    <th colspan="2">Edit Approval Form</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label for="policynumber">Policy Number:</label></td>
+                    <td>
+                        <select name="policynumber" id="policynumber" required>
+                            {% for policyNumber in policyNumbers %}
+                                <option value="{{ policyNumber.policynumber }}" 
+                                    {% if approval.policynumber == policyNumber.policynumber %} selected {% endif %}>
+                                    {{ policyNumber.policynumber }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="availmentdate">Availment Date:</label></td>
+                    <td><input type="date" name="availmentdate" id="availmentdate" value="{{ approval.availmentdate }}"></td>
+                </tr>
+                <tr>
+                    <td><label for="providercode">Provider Code:</label></td>
+                    <td>
+                        <select name="providercode" id="providercode">
+                            {% for provider in Providers %}
+                                <option value="{{ provider.providercode }}" {% if approval.providercode.providercode == provider.providercode  %}selected{% endif %}>
+                                    {{ provider.providername }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="doctorcode">Doctor Code:</label></td>
+                    <td>
+                        <select name="doctorcode" id="doctorcode">
+                            {% for doctor in Doctors %}
+                                <option value="{{ doctor.doctorcode }}" {% if approval.doctorcode.doctorcode == doctor.doctorcode  %}selected{% endif %}>
+                                    {{ doctor.lastname }} {{ doctor.firstname }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="callername">Caller Name:</label></td>
+                    <td><input type="text" name="callername" id="callername" value="{{ approval.callername }}"></td>
+                </tr>
+                <tr>
+                    <td><label for="availmenttypecode">Availment Type Code:</label></td>
+                    <td>
+                        <select name="availmenttypecode" id="availmenttypecode">
+                            {% for availmenttype in availmenttypeList %}
+                                <option value="{{ availmenttype.availmenttypecode }}" {% if approval.availmenttypecode.availmenttypecode == availmenttype.availmenttypecode  %}selected{% endif %}>
+                                    {{ availmenttype.availmenttypename }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="initialdiagnosis">Initial Diagnosis:</label></td>
+                    <td>
+                        <select name="initialdiagnosis" id="initialdiagnosis">
+                            {% for diagnosis in diagnosisList %}
+                                <option value="{{ diagnosis.diagnosiscode }}" {% if approval.initialdiagnosis.diagnosiscode == diagnosis.diagnosiscode  %}selected{% endif %}>
+                                    {{ diagnosis.diagnosisname }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="finaldiagnosis">Final Diagnosis:</label></td>
+                    <td>
+                        <select name="finaldiagnosis" id="finaldiagnosis">
+                            {% for diagnosis in diagnosisList %}
+                                <option value="{{ diagnosis.diagnosiscode }}" 
+                                    {% if approval.finaldiagnosis.diagnosiscode == diagnosis.diagnosiscode %}selected{% endif %}>
+                                    {{ diagnosis.diagnosisname }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="idpresented">ID Presented:</label></td>
+                    <td><input type="text" name="idpresented" id="idpresented" value="{{ approval.idpresented }}"></td>
+                </tr>
+                <tr>
+                    <td><label for="statuscode">Status Code:</label></td>
+                    <td>
+                        <select name="statuscode" id="statuscode">
+                            {% for availmentstatus in availmentstatusList %}
+                                <option value="{{ availmentstatus.availmentstatuscode }}" {% if approval.statuscode.availmentstatuscode == availmentstatus.availmentstatuscode  %}selected{% endif %}>
+                                    {{ availmentstatus.availmentstatusname }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="disapproved">Disapproved:</label></td>
+                    <td><input type="text" name="disapproved" id="disapproved" value="{{ approval.disapproved }}"></td>
+                </tr>
+                <tr>
+                    <td><label for="remarks">Remarks:</label></td>
+                    <td><textarea name="remarks" id="remarks" rows="4">{{ approval.remarks }}</textarea></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" align="center">
+                        <button type="submit">Save Changes</button>
+                        <button type="reset">Reset</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        
+    </form>
+    <script>
+        // Add event listener for the select element
+        document.getElementById("finaldiagnosis").addEventListener("change", function () {
+            console.log("Selected value:", this.value);
+            console.log("Selected text:", this.options[this.selectedIndex].text);
+        });
+    </script>
+</body>
+
+</html>

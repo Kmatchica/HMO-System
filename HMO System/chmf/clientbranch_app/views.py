@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from datetime import datetime
 from .models import branch, historybranch
 from django.db.models import Max
@@ -8,6 +9,8 @@ from django.contrib import messages
 from django.db.models.functions import Upper
 from client_app.models import client
 from clientstatus_app.models import clientstatus
+
+
 
 def branchinsert(request): 
     Clients = client.objects.exclude(transactype__in=['Delete', 'Terminate','Disapprove', 'delete'])  

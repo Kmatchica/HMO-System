@@ -50,11 +50,9 @@ urlpatterns = [
     path('saletype/', include('saletype_app.urls')),
     path('agentstatus/', include('agentstatus_app.urls')),
     path('franchise/', include('franchise_app.urls')),
-
     path('clientclassification/', include('clientclassification_app.urls')),
     path('clientstatus/', include('clientstatus_app.urls')),
     path('clientsob/', include('clientsob_app.urls')),
-    path('clientbranch/', include('clientbranch_app.urls')),
     path('client/', include('client_app.urls')),
     path('sob/', include('sob_app.urls')),
     path('memberstatus/', include('memberstatus_app.urls')),
@@ -63,6 +61,7 @@ urlpatterns = [
     path('medicalavailmentstatus/', include('medicalavailmentstatus_app.urls')),
     path('medicalavailmenttype/', include('medicalavailmenttype_app.urls')),
     path('medicalapprovalprocedure/', include('medicalapprovalprocedure_app.urls')),
-    path('medicaldiagnosis/', include('medicaldiagnosis_app.urls'))
-
+    path('medicaldiagnosis/', include('medicaldiagnosis_app.urls')),
+    path('medicalapproval/', include('medicalapproval_app.urls'))
+    
 ]
